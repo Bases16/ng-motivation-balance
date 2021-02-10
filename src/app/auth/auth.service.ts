@@ -6,12 +6,8 @@ import {Router} from '@angular/router';
 import {User} from './user.model';
 
 export interface AuthResponseData {
-  idToken: string;
   email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean
+  token: string;
 }
 
 @Injectable({providedIn: 'root'})
@@ -97,9 +93,14 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
+  private handleAuthentication(email: string, token: string) {
+
+    const payload = JSON.parse(token.match(/\.(.+)\./)[1]);
+
+    const expirationDate = new Date(payload.exp * 1000);
+    const userRole = payload.role;
+
+    const user = new User(email, userRole, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));

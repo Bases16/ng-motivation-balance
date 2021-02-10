@@ -7,16 +7,21 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.
 import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {HeaderComponent} from './header/header.component';
+import { AdminToolsComponent } from './admin-tools/admin-tools.component';
 
 const appRoutes: Routes = [
-  { path: '', component: AuthComponent }
+  { path: 'auth', component: AuthComponent },
+  { path: '**', redirectTo: '/auth'}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    HeaderComponent,
+    AdminToolsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

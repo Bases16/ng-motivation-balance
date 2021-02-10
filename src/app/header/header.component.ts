@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
     });
 
-    this.isAuthenticated = true; // костыль
+    // this.isAuthenticated = true; // костыль
   }
 
   ngOnDestroy(): void {

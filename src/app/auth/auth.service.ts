@@ -24,15 +24,13 @@ export class AuthService {
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCpuUZoj7UNCM6xbnOCDa-okS4Vw8Q-s0',
         {
           email: email,
-          password: password,
-          returnSecureToken: true
+          password: password
         }
       )
       .pipe(
         catchError(this.handleError),
         tap(resData => {
-          this.handleAuthentication(resData.email, resData.localId,
-                                    resData.idToken, +resData.expiresIn);
+          this.handleAuthentication(resData.email, resData.token);
         })
       );
   }
@@ -40,18 +38,19 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBCpuUZoj7UNCM6xbnOCDa-okS4Vw8Q-s0',
+        'http://localhost:8080/rest/auth/login',
         {
           email: email,
-          password: password,
-          returnSecureToken: true
+          password: password
         }
       )
       .pipe(
-        catchError(this.handleError),
+        catchError(errorRes => {
+          console.log(errorRes);
+          return this.handleError(errorRes);
+        }),
         tap(resData => {
-          this.handleAuthentication(resData.email, resData.localId,
-            resData.idToken, +resData.expiresIn);
+          this.handleAuthentication(resData.email, resData.token);
         })
       );
   }
@@ -93,11 +92,13 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(email: string, token: string) {
+  private handleAuthentication(email: string, encodedToken: string) {
 
-    const payload = JSON.parse(token.match(/\.(.+)\./)[1]);
+    const token = atob(encodedToken.match(/\.(.+)\./)[1]);
 
+    const payload = JSON.parse(token);
     const expirationDate = new Date(payload.exp * 1000);
+    const expiresIn = (payload.exp * 1000) - new Date().getTime();
     const userRole = payload.role;
 
     const user = new User(email, userRole, token, expirationDate);

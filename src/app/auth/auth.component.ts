@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {AuthResponseData, AuthService} from './auth.service';
+import {AuthService} from './auth.service';
+import {take, tap} from 'rxjs/operators';
 
 
 @Component({
@@ -32,29 +32,44 @@ export class AuthComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    let authObs: Observable<AuthResponseData>;
-
     this.isLoading = true;
     if (this.isLoginMode) {
-      authObs = this.authService.login(email, password);
+      this.authService.login(email, password)
+        .subscribe(resData => {
+          console.log(resData);
+          this.isLoading = false;
+          this.isLoginMode = true;
+          this.authService.user.pipe(
+            take(1),
+            tap(user => {
+              if (user.role === 'ADMIN') {
+                this.router.navigate(['/admin-tools']);
+              } else {
+                this.router.navigate(['/new-survey']);
+              }
+            })).subscribe();
+        }, errorMessage => {
+          console.log(errorMessage);
+          this.error = errorMessage;
+          this.isLoading = false;
+        });
     } else {
-      authObs = this.authService.signUp(email, password)
+      const firstName = form.value.firstName;
+      const lastName = form.value.lastName;
+      this.authService.signUp(email, password, firstName, lastName)
+        .subscribe(resData => {
+          console.log(resData);
+          this.isLoading = false;
+          this.router.navigate(['/auth']);
+          this.isLoginMode = true;
+        }, errorMessage => {
+          console.log(errorMessage);
+          this.error = errorMessage;
+          this.isLoading = false;
+        });
     }
-
-    authObs.subscribe(resData => {
-      console.log(resData);
-      this.isLoading = false;
-      this.router.navigate(['/auth']);
-    },errorMessage => {
-      console.log(errorMessage);
-      this.error = errorMessage;
-      this.isLoading = false;
-    });
-
     form.reset();
   }
-
-
 
 
 }

@@ -18,19 +18,28 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router) {}
 
-  signUp(email: string, password: string) {
+  signUp(email: string, password: string, firstName: string, lastName: string) {
     return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCpuUZoj7UNCM6xbnOCDa-okS4Vw8Q-s0',
+      .post(
+        'http://localhost:8080/rest/auth/register',
         {
           email: email,
-          password: password
+          password: password,
+          firstName: firstName,
+          lastName: lastName
         }
       )
       .pipe(
-        catchError(this.handleError),
+        // catchError(this.handleError),
+        catchError(errorRes => {
+          console.log('errorRes:');
+          console.log(errorRes);
+          return this.handleError(errorRes);
+        }),
         tap(resData => {
-          this.handleAuthentication(resData.email, resData.token);
+          // this.handleAuthentication(resData.email, resData.token);
+          console.log('resData:');
+          console.log(resData);
         })
       );
   }
@@ -46,6 +55,7 @@ export class AuthService {
       )
       .pipe(
         catchError(errorRes => {
+          console.log('errorRes:');
           console.log(errorRes);
           return this.handleError(errorRes);
         }),
@@ -58,7 +68,7 @@ export class AuthService {
   autoLogin() {
     const userData: {
       email: string;
-      id: string;
+      role: string;
       _token: string;
       _tokenExpirationDate: string;
     } = JSON.parse(localStorage.getItem('userData'));
@@ -66,7 +76,7 @@ export class AuthService {
     if (!userData) return;
     const loadedUser = new User(
       userData.email,
-      userData.id,
+      userData.role,
       userData._token,
       new Date(userData._tokenExpirationDate)
     );

@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {User} from './user.model';
 
 export interface AuthResponseData {
+  id: string;
   email: string;
   token: string;
 }
@@ -60,13 +61,14 @@ export class AuthService {
           return this.handleError(errorRes);
         }),
         tap(resData => {
-          this.handleAuthentication(resData.email, resData.token);
+          this.handleAuthentication(+resData.id, resData.email, resData.token);
         })
       );
   }
 
   autoLogin() {
     const userData: {
+      id: number,
       email: string;
       role: string;
       _token: string;
@@ -75,6 +77,7 @@ export class AuthService {
 
     if (!userData) return;
     const loadedUser = new User(
+      userData.id,
       userData.email,
       userData.role,
       userData._token,
@@ -102,7 +105,7 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(email: string, encodedToken: string) {
+  private handleAuthentication(id:number, email: string, encodedToken: string) {
 
     const token = atob(encodedToken.match(/\.(.+)\./)[1]);
 
@@ -111,7 +114,7 @@ export class AuthService {
     const expiresIn = (payload.exp * 1000) - new Date().getTime();
     const userRole = payload.role;
 
-    const user = new User(email, userRole, token, expirationDate);
+    const user = new User(id, email, userRole, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));

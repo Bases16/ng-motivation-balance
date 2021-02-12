@@ -14,7 +14,7 @@ import { ResultListComponent } from './result-list/result-list.component';
 import { ResultComponent } from './result-list/result/result.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import {AuthPageGuard} from './auth/guards/auth-page.guard';
-import { AccessDeniedComponent } from './shared/access-denied/access-denied.component';
+import {AccessDeniedComponent} from './shared/access-denied/access-denied.component';
 import {AdminPagesAuthGuard} from './auth/guards/admin-pages-auth.guard';
 import {SpecPagesAuthGuard} from './auth/guards/spec-pages-auth.guard';
 import {ManagerPagesAuthGuard} from './auth/guards/manager-pages-auth.guard';

@@ -10,7 +10,7 @@
           <a routerLink="/new-survey">Take a Survey</a>
         </li>
         <li routerLinkActive="active" *ngIf="isAuthenticated && !(userRole === 'ADMIN')">
-          <a routerLink="/my-surveys">My Surveys</a>
+          <a routerLink="/my-results">My Results</a>
         </li>
         <li routerLinkActive="active" *ngIf="isAuthenticated && userRole === 'MANAGER'">
           <a routerLink="/my-employees">My Employees</a>

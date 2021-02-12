@@ -10,14 +10,16 @@ import {FormsModule} from '@angular/forms';
 import {HeaderComponent} from './header/header.component';
 import { AdminToolsComponent } from './admin-tools/admin-tools.component';
 import { NewSurveyComponent } from './new-survey/new-survey.component';
-import { ResultListComponent } from './result-list/result-list.component';
-import { ResultComponent } from './result-list/result/result.component';
+import { ResultListComponent } from './results/result-list/result-list.component';
+import { ResultComponent } from './results/result-list/result/result.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import {AuthPageGuard} from './auth/guards/auth-page.guard';
 import {AccessDeniedComponent} from './shared/access-denied/access-denied.component';
 import {AdminPagesAuthGuard} from './auth/guards/admin-pages-auth.guard';
 import {SpecPagesAuthGuard} from './auth/guards/spec-pages-auth.guard';
 import {ManagerPagesAuthGuard} from './auth/guards/manager-pages-auth.guard';
+import { ResultsComponent } from './results/results.component';
+import {ResultsResolver} from './results/results-resolver.service';
 
 const appRoutes: Routes = [
   { path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard] },
@@ -25,7 +27,11 @@ const appRoutes: Routes = [
   { path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard] },
   { path: 'new-survey', component: NewSurveyComponent, canActivate: [SpecPagesAuthGuard] },
   { path: 'my-employees', component: EmployeeListComponent, canActivate: [ManagerPagesAuthGuard] },
-  { path: 'my-surveys', component: ResultListComponent, canActivate: [SpecPagesAuthGuard] },
+  { path: 'my-results', component: ResultsComponent,
+    canActivate: [SpecPagesAuthGuard], resolve: {results: ResultsResolver},
+    children: [
+      { path: ':id', component: ResultComponent }
+    ]},
 
   { path: 'access-denied', component: AccessDeniedComponent },
   { path: '**', redirectTo: '/auth'}
@@ -42,7 +48,8 @@ const appRoutes: Routes = [
     ResultListComponent,
     ResultComponent,
     EmployeeListComponent,
-    AccessDeniedComponent
+    AccessDeniedComponent,
+    ResultsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

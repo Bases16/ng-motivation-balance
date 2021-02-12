@@ -4,6 +4,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {BehaviorSubject, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {User} from './user.model';
+import {environment} from '../../environments/environment';
 
 export interface AuthResponseData {
   id: string;
@@ -22,7 +23,7 @@ export class AuthService {
   signUp(email: string, password: string, firstName: string, lastName: string) {
     return this.http
       .post(
-        'http://localhost:8080/rest/auth/register',
+        environment.serverHost + '/rest/auth/register',
         {
           email: email,
           password: password,
@@ -48,7 +49,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'http://localhost:8080/rest/auth/login',
+        environment.serverHost + '/rest/auth/login',
         {
           email: email,
           password: password

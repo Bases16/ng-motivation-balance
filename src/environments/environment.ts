@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   serverHost: 'http://localhost:8080'
+  // serverHost: 'http://localhost:8080/motivation-balance-1.0-SNAPSHOT'
 };
 
 /*

@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 import {RouterModule, Routes} from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {HeaderComponent} from './header/header.component';
 import { AdminToolsComponent } from './admin-tools/admin-tools.component';
@@ -20,6 +20,7 @@ import {SpecPagesAuthGuard} from './auth/guards/spec-pages-auth.guard';
 import {ManagerPagesAuthGuard} from './auth/guards/manager-pages-auth.guard';
 import { ResultsComponent } from './results/results.component';
 import {ResultsResolver} from './results/results-resolver.service';
+import {AuthInterceptorService} from './auth/auth-interceptor.service';
 
 const appRoutes: Routes = [
   { path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard] },
@@ -57,7 +58,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

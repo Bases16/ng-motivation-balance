@@ -11,6 +11,13 @@ export interface AuthResponseData {
   email: string;
   token: string;
 }
+export interface UserData {
+  id: number,
+  email: string;
+  role: string;
+  _token: string;
+  _tokenExpirationDate: string;
+}
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -68,13 +75,7 @@ export class AuthService {
   }
 
   autoLogin() {
-    const userData: {
-      id: number,
-      email: string;
-      role: string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));
+    const userData: UserData = JSON.parse(localStorage.getItem('userData'));
 
     if (!userData) return;
     const loadedUser = new User(
@@ -108,14 +109,14 @@ export class AuthService {
 
   private handleAuthentication(id:number, email: string, encodedToken: string) {
 
-    const token = atob(encodedToken.match(/\.(.+)\./)[1]);
+    const tokenPayloadDecoded = atob(encodedToken.match(/\.(.+)\./)[1]);
 
-    const payload = JSON.parse(token);
+    const payload = JSON.parse(tokenPayloadDecoded);
     const expirationDate = new Date(payload.exp * 1000);
     const expiresIn = (payload.exp * 1000) - new Date().getTime();
     const userRole = payload.role;
 
-    const user = new User(id, email, userRole, token, expirationDate);
+    const user = new User(id, email, userRole, encodedToken, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));

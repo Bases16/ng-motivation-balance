@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
-import {ResultResponseData} from '../results/results.service';
 
 @Component({
   selector: 'app-new-survey',
@@ -18,16 +17,4 @@ export class NewSurveyComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  OnClick() {
-    let results;
-
-    this.http.get(environment.serverHost + '/rest/results/3')
-      .subscribe(data => {
-        console.log(data);
-        results = data;
-      }, error => {
-        console.log(error);
-      });
-
-  }
 }

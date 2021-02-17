@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-hover text-center">
+    <thead>
+    <tr class="active">
+      <th class="text-center">Factor</th>
+      <th class="text-center">Attitude</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let pair of result.pairs">
+      <td>{{ pair.factorName }}</td>
+      <td>{{ pair.estimation }}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr class="active">
+      <td><b>Total Balance</b></td>
+      <td class="text-primary"><b>{{total}}</b></td>
+    </tr>
+    </tfoot>
+  </table>
+</div>

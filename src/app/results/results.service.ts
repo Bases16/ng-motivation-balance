@@ -1,39 +1,40 @@
 import {Injectable} from '@angular/core';
 import {ResultModel} from './result.model';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 export interface ResultResponseData {
-  employeeId: string;
-  passingDatetime: string;
+  empId: string;
+  passDatetime: string;
   estimationPairs: { factorName: string, estimation: string }[]
 }
 
 @Injectable({providedIn: 'root'})
 export class ResultsService {
-  constructor(private http: HttpClient,
-              private router: Router) {
+  userResults: ResultModel[]
+
+  constructor(private http: HttpClient) {
   }
 
-  getResultsByEmpId(empId: string): /*ResultModel[]*/ ResultResponseData{
+  getResultsObservableByEmpId(empId: number): Observable<ResultModel[]> {
+    return this.http.get<ResultResponseData[]>(environment.serverHost + '/rest/results/' + empId)
+      .pipe(
+        map(resultsResponse => {
+          console.log('resultsResponse');
+          console.log(resultsResponse);
 
-    let results: ResultResponseData;
-
-    this.http.get<ResultResponseData>(environment.serverHost + '/rest/results/' + empId)
-      // .pipe(
-      //   map(results => {
-      //     return results
-      //
-      //   }))
-      .subscribe(data => {
-        console.log(data);
-        results = data;
-      }, error => {
-        console.log(error);
-      });
-
-
-    return results;
+          return resultsResponse.map(resResp => {
+            return new ResultModel(resResp.empId, new Date(resResp.passDatetime),
+              resResp.estimationPairs);
+          });
+        })
+      );
   }
+
+  getResultByEmpId(empId: number): ResultModel {
+    return this.userResults[empId];
+  }
+
 }

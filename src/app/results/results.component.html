@@ -1,8 +1,35 @@
 <div class="row">
   <div class="col-md-5">
-    <app-result-list></app-result-list>
+    <h4 style="font-style: italic; text-align: center">Firstname Lastname's surveys:</h4>
+    <div class="row">
+      <div class="col-md-12">
+        <a *ngFor="let result of userResults; let i = index;"
+           routerLinkActive="active"
+           [routerLink]="['/my-results', i]"
+           class="list-group-item text-center"
+           style="cursor: pointer"><b>{{ result.passDatetime | date: "MMM d, y 'at' HH:mm" }}</b></a>
+      </div>
+    </div>
+    <br>
   </div>
   <div class="col-md-7">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

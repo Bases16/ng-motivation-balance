@@ -13,7 +13,7 @@ export class ResultsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private resultsService: ResultsService){ }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.data
       .subscribe( (data: Data) => {
         this.userResults = data['results'];

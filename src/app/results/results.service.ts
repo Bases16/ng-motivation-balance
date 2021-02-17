@@ -18,7 +18,7 @@ export class ResultsService {
   constructor(private http: HttpClient) {
   }
 
-  getResultsObservableByEmpId(empId: number): Observable<ResultModel[]> {
+  getResultsByEmpId(empId: number): Observable<ResultModel[]> {
     return this.http.get<ResultResponseData[]>(environment.serverHost + '/rest/results/' + empId)
       .pipe(
         map(resultsResponse => {

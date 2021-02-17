@@ -21,13 +21,17 @@ import {ResultsComponent} from './results/results.component';
 import {ResultsResolver} from './results/results-resolver.service';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import { ResultsStartComponent } from './results/results-start/results-start.component';
+import {FactorsResolver} from './new-survey/factors-resolver.service';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
 
   {path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard]},
-  {path: 'new-survey', component: NewSurveyComponent, canActivate: [SpecPagesAuthGuard]},
   {path: 'my-employees', component: EmployeeListComponent, canActivate: [ManagerPagesAuthGuard]},
+  {
+    path: 'new-survey', component: NewSurveyComponent,
+    canActivate: [SpecPagesAuthGuard], resolve: {activeFactors: FactorsResolver},
+  },
   {
     path: 'my-results', component: ResultsComponent,
     canActivate: [SpecPagesAuthGuard], resolve: {results: ResultsResolver},

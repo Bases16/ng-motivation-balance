@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {environment} from '../../environments/environment';
+import {ActivatedRoute, Data} from '@angular/router';
 
 @Component({
   selector: 'app-new-survey',
@@ -9,12 +7,17 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./new-survey.component.css']
 })
 export class NewSurveyComponent implements OnInit {
+  activeFactors: string[]
 
-  constructor(private http: HttpClient,
-              private router: Router) {
-  }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.data
+      .subscribe( (data: Data) => {
+        this.activeFactors = data['activeFactors'];
+        // this.factorsService.activeFactors = this.factors;
+      });
+
   }
 
 }

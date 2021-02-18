@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
+import {NgForm} from '@angular/forms';
+import {ResultsService} from '../results.service';
+import {AuthService} from '../auth/auth.service';
+import {take, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-survey',
@@ -7,9 +11,13 @@ import {ActivatedRoute, Data} from '@angular/router';
   styleUrls: ['./new-survey.component.css']
 })
 export class NewSurveyComponent implements OnInit {
-  activeFactors: string[]
+  @ViewChild('ngForm') surveyForm: NgForm;
+  activeFactors: string[];
+  empId: number;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,
+              private resultsService: ResultsService,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
     this.route.data
@@ -17,7 +25,34 @@ export class NewSurveyComponent implements OnInit {
         this.activeFactors = data['activeFactors'];
         // this.factorsService.activeFactors = this.factors;
       });
+    this.authService.user.pipe(
+      take(1),
+      tap(user => this.empId = user.id)
+    ).subscribe();
+  }
 
+  onSubmit() {
+    console.log(this.surveyForm);
+
+    let estimationPairs: { factorName: string, estimation: string }[] = [];
+
+    this.activeFactors.forEach(factor => {
+      estimationPairs.push(
+        { factorName: factor, estimation: this.surveyForm.value[factor] }
+      );
+    });
+
+    console.log(estimationPairs);
+    console.log(this.empId);
+
+    console.log(JSON
+        .stringify({empId: '' + this.empId, estimationPairs: estimationPairs}));
+
+    this.resultsService.saveResult(      {
+      empId: '' + this.empId, estimationPairs: estimationPairs
+    }).subscribe(resp => console.log(resp));
+
+    this.surveyForm.reset();
   }
 
 }

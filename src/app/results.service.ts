@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {ResultModel} from './result.model';
+import {ResultModel} from './results/result.model';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import {environment} from '../environments/environment';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-export interface ResultResponseData {
+export interface ResultDto {
   empId: string;
-  passDatetime: string;
+  passDatetime?: string;
   estimationPairs: { factorName: string, estimation: string }[]
 }
 
@@ -19,7 +19,7 @@ export class ResultsService {
   }
 
   getResultsByEmpId(empId: number): Observable<ResultModel[]> {
-    return this.http.get<ResultResponseData[]>(environment.serverHost + '/rest/results/' + empId)
+    return this.http.get<ResultDto[]>(environment.serverHost + '/rest/results/' + empId)
       .pipe(
         map(resultsResponse => {
           console.log('resultsResponse');
@@ -35,6 +35,10 @@ export class ResultsService {
 
   getResultByEmpId(empId: number): ResultModel {
     return this.userResults[empId];
+  }
+
+  saveResult(resultDto: ResultDto): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/results/save', resultDto)
   }
 
 }

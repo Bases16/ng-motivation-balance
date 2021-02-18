@@ -1,3 +1,30 @@
-<p>new-survey works!</p>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <form (ngSubmit)="onSubmit()" #ngForm="ngForm">
+      <div class="col-md-12" *ngFor="let factor of activeFactors">
+        <p class="text-primary text-center">{{factor + ':'}}</p>
+        <div class="radio-inline">
+          <label>
+            <input type="radio" ngModel name="{{factor}}" value="LIKE" required>LIKE
+          </label>
+        </div>
+        <div class="radio-inline">
+          <label>
+            <input type="radio" ngModel name="{{factor}}" value="NEUTRAL" required>NEUTRAL
+          </label>
+        </div>
+        <div class="radio-inline">
+          <label>
+            <input type="radio" ngModel name="{{factor}}" value="NOT_LIKE" required>NOT LIKE
+          </label>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!ngForm.valid">Send
+      </button>
+    </form>
+  </div>
 
-<br><p *ngFor="let factor of activeFactors">{{factor}}</p>
+</div>

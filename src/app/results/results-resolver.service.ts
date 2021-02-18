@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {ResultModel} from './result.model';
 import {Observable, of} from 'rxjs';
-import {ResultsService} from './results.service';
+import {ResultsService} from '../results.service';
 import {Injectable} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {catchError, concatMap, take} from 'rxjs/operators';

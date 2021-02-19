@@ -27,7 +27,7 @@ export class NewSurveyComponent implements OnInit {
       });
     this.authService.user.pipe(
       take(1),
-      tap(user => this.empId = user.id)
+      tap(user => this.empId = user.empId)
     ).subscribe();
   }
 

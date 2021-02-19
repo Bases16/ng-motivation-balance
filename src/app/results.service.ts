@@ -19,12 +19,9 @@ export class ResultsService {
   }
 
   getResultsByEmpId(empId: number): Observable<ResultModel[]> {
-    return this.http.get<ResultDto[]>(environment.serverHost + '/rest/results/' + empId)
+    return this.http.get<ResultDto[]>(environment.serverHost + '/rest/results/emp/' + empId)
       .pipe(
         map(resultsResponse => {
-          console.log('resultsResponse');
-          console.log(resultsResponse);
-
           return resultsResponse.map(resResp => {
             return new ResultModel(resResp.empId, new Date(resResp.passDatetime),
               resResp.estimationPairs);

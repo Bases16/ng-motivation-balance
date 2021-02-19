@@ -6,13 +6,13 @@ import {Router} from '@angular/router';
 import {User} from './user.model';
 import {environment} from '../../environments/environment';
 
-export interface AuthResponseData {
-  id: string;
+export interface AuthResponseDto {
+  empId: string;
   email: string;
   token: string;
 }
 export interface UserData {
-  id: number,
+  empId: number,
   email: string;
   role: string;
   _token: string;
@@ -55,7 +55,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http
-      .post<AuthResponseData>(
+      .post<AuthResponseDto>(
         environment.serverHost + '/rest/auth/login',
         {
           email: email,
@@ -69,7 +69,7 @@ export class AuthService {
           return this.handleError(errorRes);
         }),
         tap(resData => {
-          this.handleAuthentication(+resData.id, resData.email, resData.token);
+          this.handleAuthentication(+resData.empId, resData.email, resData.token);
         })
       );
   }
@@ -79,7 +79,7 @@ export class AuthService {
 
     if (!userData) return;
     const loadedUser = new User(
-      userData.id,
+      userData.empId,
       userData.email,
       userData.role,
       userData._token,
@@ -107,7 +107,7 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(id:number, email: string, encodedToken: string) {
+  private handleAuthentication(empId:number, email: string, encodedToken: string) {
 
     const tokenPayloadDecoded = atob(encodedToken.match(/\.(.+)\./)[1]);
 
@@ -116,7 +116,7 @@ export class AuthService {
     const expiresIn = (payload.exp * 1000) - new Date().getTime();
     const userRole = payload.role;
 
-    const user = new User(id, email, userRole, encodedToken, expirationDate);
+    const user = new User(empId, email, userRole, encodedToken, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));

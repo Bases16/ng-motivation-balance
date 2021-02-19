@@ -8,6 +8,6 @@ export class FactorsService {
   constructor(private http: HttpClient) {}
 
   getActiveFactors(): Observable<string[]> {
-    return this.http.get<string[]>(environment.serverHost + '/rest/factors');
+    return this.http.get<string[]>(environment.serverHost + '/rest/factors/active');
   }
 }

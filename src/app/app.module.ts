@@ -23,11 +23,13 @@ import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import { ResultsStartComponent } from './results/results-start/results-start.component';
 import {FactorsResolver} from './new-survey/factors-resolver.service';
 import {EmployeeListResolver} from './employee-list/employee-list-resolver.service';
+import { FactorsManagingComponent } from './admin-tools/factors-managing/factors-managing.component';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
 
   {path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard]},
+  {path: 'admin-tools/factors-managing', component: FactorsManagingComponent},
   {path: 'my-employees', component: EmployeeListComponent,
     canActivate: [ManagerPagesAuthGuard], resolve: {employees: EmployeeListResolver}
   },
@@ -60,7 +62,8 @@ const appRoutes: Routes = [
     EmployeeListComponent,
     AccessDeniedComponent,
     ResultsComponent,
-    ResultsStartComponent
+    ResultsStartComponent,
+    FactorsManagingComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

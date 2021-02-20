@@ -17,6 +17,8 @@ export class EmployeeListComponent implements OnInit {
       .subscribe( (data: Data) => {
         this.employees = data['employees'];
       });
+
+
   }
 
 }

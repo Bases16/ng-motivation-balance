@@ -10,7 +10,7 @@ export class FactorsResolver implements Resolve<string[]> {
   constructor(private factorsService: FactorsService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string[]> {
-    return this.factorsService.getActiveFactors()
+    return this.factorsService.getActiveFactorNames()
       .pipe(
         tap(factors => {
           console.log('log in factor resolver tap()');

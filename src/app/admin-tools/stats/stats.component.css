@@ -1,0 +1,21 @@
+.percentage-block {
+  border: solid 1px;
+}
+.like-block {
+  display: inline-block;
+  text-align: center;
+  background-color: green;
+  color: white;
+}
+.neutral-block {
+  display: inline-block;
+  text-align: center;
+  background-color: lightsteelblue;
+  color: white;
+}
+.dislike-block {
+  display: inline-block;
+  text-align: center;
+  background-color: #dbc973;
+  color: white;
+}

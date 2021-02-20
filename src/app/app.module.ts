@@ -24,12 +24,15 @@ import { ResultsStartComponent } from './results/results-start/results-start.com
 import {FactorsResolver} from './new-survey/factors-resolver.service';
 import {EmployeeListResolver} from './employee-list/employee-list-resolver.service';
 import { FactorsManagingComponent } from './admin-tools/factors-managing/factors-managing.component';
+import { StatsComponent } from './admin-tools/stats/stats.component';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
 
   {path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard]},
   {path: 'admin-tools/factors-managing', component: FactorsManagingComponent},
+  {path: 'admin-tools/stats', component: StatsComponent},
+
   {path: 'my-employees', component: EmployeeListComponent,
     canActivate: [ManagerPagesAuthGuard], resolve: {employees: EmployeeListResolver}
   },
@@ -63,7 +66,8 @@ const appRoutes: Routes = [
     AccessDeniedComponent,
     ResultsComponent,
     ResultsStartComponent,
-    FactorsManagingComponent
+    FactorsManagingComponent,
+    StatsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

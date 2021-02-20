@@ -36,7 +36,7 @@ export class FactorsManagingComponent implements OnInit {
   }
 
   onSubmit() {
-    const newFactorName = this.addButtonForm.value.newFactorName
+    const newFactorName = this.addButtonForm.value.newFactorName;
     this.factorsService.createNewFactor(newFactorName)
       .subscribe(
         resp => {

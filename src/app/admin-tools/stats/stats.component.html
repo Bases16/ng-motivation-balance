@@ -1,49 +1,21 @@
-
-<p *ngFor="let stat of factorStats">
-  {{stat.factorName + ':'}}<br>
-  {{'like percentage: ' + stat.likePercent}}<br>
-  {{'neutral percentage: ' + stat.neutralPercent}}<br>
-  {{'not like percentage: ' + stat.notLikePercent}}<br>
-</p>
-
 <div *ngFor="let stat of factorStats">
   <h3>{{stat.factorName}}</h3>
   <div class="percentage-block">
     <div class="like-block"
-         [ngStyle]="{width: stat.likePercent + '%'}">
-      LIKE: {{stat.likePercent}}%
+         [ngStyle]="{width: stat.likePercent + '%',
+                     display: stat.likePercent < 0.1 ? 'none' : 'display'}">
+      <span>LIKE: {{stat.likePercent}}%</span>
     </div>
     <div class="neutral-block"
-         [ngStyle]="{width: stat.neutralPercent + '%'}">
+         [ngStyle]="{width: stat.neutralPercent + '%',
+                     display: stat.neutralPercent < 0.1 ? 'none' : 'display'}">
       NEUTRAL: {{stat.neutralPercent}}%
     </div>
     <div class="dislike-block"
          style="display: inline-block"
-         [ngStyle]="{width: stat.notLikePercent + '%'}">
-      DISLIKE: {{stat.notLikePercent}}%
+         [ngStyle]="{width: stat.dislikePercent + '%',
+                     display: stat.dislikePercent < 0.1 ? 'none' : 'display'}">
+      DISLIKE: {{stat.dislikePercent}}%
     </div>
   </div>
 </div>
-
-
-
-<!--<div *ngFor="let stat of factorStats">-->
-<!--  <h3>{{stat.factorName}}</h3>-->
-<!--  <div class="percentage-block">-->
-<!--    <div class="like-block"-->
-<!--         *ngIf="stat.likePercent < 0.1"-->
-<!--         [ngStyle]="{width: stat.likePercent + '%'}">-->
-<!--      LIKE: {{stat.likePercent}}%-->
-<!--    </div>-->
-<!--    <div class="neutral-block"-->
-<!--         *ngIf="stat.neutralPercent < 0.1"-->
-<!--         [ngStyle]="{width: stat.neutralPercent + '%'}">-->
-<!--      NEUTRAL: {{stat.neutralPercent}}%-->
-<!--    </div>-->
-<!--    <div class="dislike-block"-->
-<!--         *ngIf="stat.notLikePercent < 0.1"-->
-<!--         [ngStyle]="{width: stat.notLikePercent + '%'}">-->
-<!--      DISLIKE: {{stat.notLikePercent}}%-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

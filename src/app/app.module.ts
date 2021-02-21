@@ -25,6 +25,7 @@ import {FactorsResolver} from './new-survey/factors-resolver.service';
 import {EmployeeListResolver} from './employee-list/employee-list-resolver.service';
 import { FactorsManagingComponent } from './admin-tools/factors-managing/factors-managing.component';
 import { StatsComponent } from './admin-tools/stats/stats.component';
+import { EmployeesManagingComponent } from './admin-tools/employees-managing/employees-managing.component';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
   {path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard]},
   {path: 'admin-tools/factors-managing', component: FactorsManagingComponent},
   {path: 'admin-tools/stats', component: StatsComponent},
+  {path: 'admin-tools/employees-managing', component: EmployeesManagingComponent},
 
   {path: 'my-employees', component: EmployeeListComponent,
     canActivate: [ManagerPagesAuthGuard], resolve: {employees: EmployeeListResolver}
@@ -67,7 +69,8 @@ const appRoutes: Routes = [
     ResultsComponent,
     ResultsStartComponent,
     FactorsManagingComponent,
-    StatsComponent
+    StatsComponent,
+    EmployeesManagingComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

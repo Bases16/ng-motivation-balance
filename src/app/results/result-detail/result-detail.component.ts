@@ -31,7 +31,7 @@ export class ResultDetailComponent implements OnInit {
         case 'LIKE':
           this.total++;
           break;
-        case 'NOT_LIKE':
+        case 'DISLIKE':
           this.total--;
       }
     }

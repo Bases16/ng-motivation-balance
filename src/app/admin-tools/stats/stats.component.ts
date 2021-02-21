@@ -4,8 +4,13 @@ import {EstimationPairDto, StatsService} from '../../stats.service';
 class FactorStat {
   factorName: string;
   likePercent: number;
-  notLikePercent: number;
+  dislikePercent: number;
   neutralPercent: number;
+}
+
+class Factor {
+  name: string;
+  estimationsSize: number;
 }
 
 @Component({
@@ -15,8 +20,8 @@ class FactorStat {
 })
 export class StatsComponent implements OnInit {
   allRelevPairs: EstimationPairDto[] = [];
-  activeFactors: string[] = [];
   factorStats: FactorStat[] = [];
+  activeFactors: Factor[] = [];
 
   constructor(private statsService: StatsService) {}
 
@@ -35,32 +40,34 @@ export class StatsComponent implements OnInit {
 
   private calcStat() {
     for (let pair of this.allRelevPairs) {
-      if (!this.activeFactors.includes(pair.factorName)) {
-        this.activeFactors.push(pair.factorName);
+      let factor = this.activeFactors.find(factor => factor.name === pair.factorName);
+      if (factor == undefined) {
+        let newFactor: Factor = {name: pair.factorName, estimationsSize: 1};
+        this.activeFactors.push(newFactor);
+      } else {
+        factor.estimationsSize++;
       }
     }
-    const factorsSize = this.activeFactors.length;
-    const estimationsOnEachFactorSize = this.allRelevPairs.length / factorsSize;
 
     for (let factor of this.activeFactors) {
       let likes = 0;
-      let notLikes = 0;
+      let dislikes = 0;
       let neutrals = 0;
 
       for (let pair of this.allRelevPairs) {
-        if (pair.factorName === factor) {
+        if (pair.factorName === factor.name) {
           switch (pair.estimation) {
             case 'LIKE': likes++; break;
-            case 'NOT_LIKE': notLikes++; break;
+            case 'DISLIKE': dislikes++; break;
             case 'NEUTRAL': neutrals++;
           }
         }
       }
       this.factorStats.push({
-        factorName: factor,
-        likePercent: (likes / estimationsOnEachFactorSize) * 100,
-        neutralPercent: (neutrals / estimationsOnEachFactorSize) * 100,
-        notLikePercent: (notLikes / estimationsOnEachFactorSize) * 100
+        factorName: factor.name,
+        likePercent: Math.round((likes / factor.estimationsSize) * 100 * 10) / 10,
+        neutralPercent: Math.round((neutrals / factor.estimationsSize) * 100 * 10) / 10,
+        dislikePercent: Math.round((dislikes / factor.estimationsSize) * 100 * 10) / 10
       });
     }
   }

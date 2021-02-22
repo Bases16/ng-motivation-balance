@@ -4,21 +4,20 @@ import {EmployeeDto} from '../employees.service';
 
 @Component({
   selector: 'app-employee-list',
-  templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.css']
+  templateUrl: './employees-with-results-by-manager.component.html',
+  styleUrls: ['./employees-with-results-by-manager.component.css']
 })
-export class EmployeeListComponent implements OnInit {
+export class EmployeesWithResultsByManager implements OnInit {
   employees: EmployeeDto[];
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.data
-      .subscribe( (data: Data) => {
+      .subscribe((data: Data) => {
+        console.log(data['employees']);
         this.employees = data['employees'];
       });
-
-
   }
 
 }

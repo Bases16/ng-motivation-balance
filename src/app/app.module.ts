@@ -11,7 +11,7 @@ import {HeaderComponent} from './header/header.component';
 import {AdminToolsComponent} from './admin-tools/admin-tools.component';
 import {NewSurveyComponent} from './new-survey/new-survey.component';
 import {ResultDetailComponent} from './results/result-detail/result-detail.component';
-import {EmployeeListComponent} from './employee-list/employee-list.component';
+import {EmployeesWithResultsByManager} from './employees-with-results-by-manager/employees-with-results-by-manager.component';
 import {AuthPageGuard} from './auth/guards/auth-page.guard';
 import {AccessDeniedComponent} from './shared/access-denied/access-denied.component';
 import {AdminPagesAuthGuard} from './auth/guards/admin-pages-auth.guard';
@@ -22,10 +22,15 @@ import {ResultsResolver} from './results/results-resolver.service';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import { ResultsStartComponent } from './results/results-start/results-start.component';
 import {FactorsResolver} from './new-survey/factors-resolver.service';
-import {EmployeeListResolver} from './employee-list/employee-list-resolver.service';
+import {EmployeeListResolver} from './employees-with-results-by-manager/employee-with-results-by-manager-resolver.service';
 import { FactorsManagingComponent } from './admin-tools/factors-managing/factors-managing.component';
 import { StatsComponent } from './admin-tools/stats/stats.component';
 import { EmployeesManagingComponent } from './admin-tools/employees-managing/employees-managing.component';
+import { EmpManageComponent } from './admin-tools/employees-managing/emp-manage/emp-manage.component';
+import {ManagersResolver} from './admin-tools/managers-list/managers-resolver.service';
+import { ManagersListComponent } from './admin-tools/managers-list/managers-list.component';
+import { ManagerOptionsComponent } from './admin-tools/managers-list/manager-options/manager-options.component';
+import {ManagerAdminPagesAuthGuard} from './auth/guards/manager-admin-pages-auth.guard';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
@@ -33,10 +38,23 @@ const appRoutes: Routes = [
   {path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard]},
   {path: 'admin-tools/factors-managing', component: FactorsManagingComponent},
   {path: 'admin-tools/stats', component: StatsComponent},
-  {path: 'admin-tools/employees-managing', component: EmployeesManagingComponent},
+  {path: 'admin-tools/managers-list', component: ManagersListComponent,
+    resolve: {managers: ManagersResolver},
+    children: [
+      { path: ':id', component: ManagerOptionsComponent }
+    ]
+  },
 
-  {path: 'my-employees', component: EmployeeListComponent,
-    canActivate: [ManagerPagesAuthGuard], resolve: {employees: EmployeeListResolver}
+
+  {path: 'admin-tools/employees-managing', component: EmployeesManagingComponent,
+    resolve: {employees: ManagersResolver},
+    children: [
+      { path: ':id', component: EmpManageComponent }
+    ]
+  },
+
+  {path: 'my-employees', component: EmployeesWithResultsByManager,
+    canActivate: [ManagerAdminPagesAuthGuard], resolve: {employees: EmployeeListResolver}
   },
   {
     path: 'new-survey', component: NewSurveyComponent,
@@ -64,13 +82,16 @@ const appRoutes: Routes = [
     AdminToolsComponent,
     NewSurveyComponent,
     ResultDetailComponent,
-    EmployeeListComponent,
+    EmployeesWithResultsByManager,
     AccessDeniedComponent,
     ResultsComponent,
     ResultsStartComponent,
     FactorsManagingComponent,
     StatsComponent,
-    EmployeesManagingComponent
+    EmployeesManagingComponent,
+    EmpManageComponent,
+    ManagersListComponent,
+    ManagerOptionsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

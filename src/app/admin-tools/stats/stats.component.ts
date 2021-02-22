@@ -40,7 +40,7 @@ export class StatsComponent implements OnInit {
 
   private calcStat() {
     for (let pair of this.allRelevPairs) {
-      let factor = this.activeFactors.find(factor => factor.name === pair.factorName);
+      let factor = this.activeFactors.find(factor => factor.name == pair.factorName);
       if (factor == undefined) {
         let newFactor: Factor = {name: pair.factorName, estimationsSize: 1};
         this.activeFactors.push(newFactor);

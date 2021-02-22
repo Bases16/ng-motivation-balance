@@ -57,7 +57,7 @@ export class FactorsManagingComponent implements OnInit {
         resp => {
           console.log(resp);
           let factorDto = this._allFactors.find(factor => {
-            return factor.name === factorName;
+            return factor.name == factorName;
           });
           factorDto.status = factorDto.status === 'ACTIVE' ? 'REMOVED' : 'ACTIVE';
         },

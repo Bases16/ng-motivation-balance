@@ -15,7 +15,12 @@ export class EmployeeListResolver implements Resolve<EmployeeDto[]> {
     return this.authService.user.pipe(
       take(1),
       concatMap(user => {
-        return this.employeesService.getEmployeesByManagerId(user.empId)
+        if (user.empId) {
+          return this.employeesService.getEmployeesByManagerId(user.empId)
+        } else {
+          return this.employeesService
+            .getEmployeesByManagerId(+this.employeesService.currentManagerId);
+        }
       }),
       catchError(err => {
         console.log(err);

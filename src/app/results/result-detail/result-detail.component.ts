@@ -14,7 +14,7 @@ export class ResultDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private resultsService: ResultsService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     console.log('ngOnInit in ResultDetail');
     this.route.params.subscribe(
       (params: Params) => {

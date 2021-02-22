@@ -3,22 +3,21 @@ import {EmployeeDto, EmployeesService} from '../../employees.service';
 import {ActivatedRoute, Data} from '@angular/router';
 
 @Component({
-  selector: 'app-employees-managing',
-  templateUrl: './employees-managing.component.html',
-  styleUrls: ['./employees-managing.component.css']
+  selector: 'app-managers-list',
+  templateUrl: './managers-list.component.html',
+  styleUrls: ['./managers-list.component.css']
 })
-export class EmployeesManagingComponent implements OnInit {
-  currentEmpList: EmployeeDto[] = [];
+export class ManagersListComponent implements OnInit {
+  managers: EmployeeDto[] = [];
 
   constructor(private employeesService: EmployeesService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.data
       .subscribe((data: Data) => {
-        console.log(data['employees']);
-        this.currentEmpList = data['employees'];
+        console.log(data['managers']);
+        this.managers = data['managers'];
       });
-
   }
 
 }

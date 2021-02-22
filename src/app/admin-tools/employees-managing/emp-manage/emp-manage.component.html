@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-12">
+    <fieldset>
+      <legend>Manage employee</legend>
+      <button class="btn btn-danger" (click)="onRemove(employee.id)">remove from base</button><br>
+      <button class="btn btn-warning" (click)="onChangeRole(employee.id)">
+        change role to {{employee.empRole === 'MANAGER' ? 'SPECIALIST' : 'MANAGER'}}
+      </button>
+      <button class="btn btn-default">see </button>
+      <button class="btn btn-default"></button>
+
+    </fieldset>
+
+  </div>
+</div>

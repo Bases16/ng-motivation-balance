@@ -30,8 +30,25 @@ export class ResultsService {
       );
   }
 
-  getResultByEmpId(empId: number): ResultModel {
-    return this.userResults[empId];
+  getEmpResultsByManagerId(managerId: number): Observable<ResultModel[]> {
+    return this.http.get<ResultDto[]>
+    (environment.serverHost + '/rest/results/by-manager/' + managerId)
+      .pipe(
+        map(resultsResponse => {
+          return resultsResponse.map(resResp => {
+            return new ResultModel(resResp.empId, new Date(resResp.passDatetime),
+              resResp.estimationPairs);
+          });
+        })
+      );
+  }
+
+  getResultByResultOrder(order: number): ResultModel {
+    return this.userResults[order];
+  }
+
+  getResultByEmpId(empId: string): ResultModel {
+    return this.userResults.find(result => result.empId == empId);
   }
 
   saveResult(resultDto: ResultDto): Observable<any> {

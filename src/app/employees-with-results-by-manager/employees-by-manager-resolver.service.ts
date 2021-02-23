@@ -7,7 +7,7 @@ import {AuthService} from '../auth/auth.service';
 
 
 @Injectable({providedIn: 'root'})
-export class EmployeeListResolver implements Resolve<EmployeeDto[]> {
+export class EmployeesByManagerResolver implements Resolve<EmployeeDto[]> {
   constructor(private employeesService: EmployeesService,
               private authService: AuthService) {}
 
@@ -16,10 +16,10 @@ export class EmployeeListResolver implements Resolve<EmployeeDto[]> {
       take(1),
       concatMap(user => {
         if (user.empId) {
-          return this.employeesService.getEmployeesByManagerId(user.empId)
+          return this.employeesService.getEmployeesByManagerId(user.empId);
         } else {
           return this.employeesService
-            .getEmployeesByManagerId(+this.employeesService.currentManagerId);
+            .getEmployeesByManagerId(+localStorage.getItem('currentManagerId'));
         }
       }),
       catchError(err => {

@@ -16,13 +16,12 @@ import {AuthPageGuard} from './auth/guards/auth-page.guard';
 import {AccessDeniedComponent} from './shared/access-denied/access-denied.component';
 import {AdminPagesAuthGuard} from './auth/guards/admin-pages-auth.guard';
 import {SpecPagesAuthGuard} from './auth/guards/spec-pages-auth.guard';
-import {ManagerPagesAuthGuard} from './auth/guards/manager-pages-auth.guard';
 import {ResultsComponent} from './results/results.component';
-import {ResultsResolver} from './results/results-resolver.service';
+import {ResultsByEmpResolver} from './results/results-by-emp-resolver.service';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import { ResultsStartComponent } from './results/results-start/results-start.component';
 import {FactorsResolver} from './new-survey/factors-resolver.service';
-import {EmployeeListResolver} from './employees-with-results-by-manager/employee-with-results-by-manager-resolver.service';
+import {EmployeesByManagerResolver} from './employees-with-results-by-manager/employees-by-manager-resolver.service';
 import { FactorsManagingComponent } from './admin-tools/factors-managing/factors-managing.component';
 import { StatsComponent } from './admin-tools/stats/stats.component';
 import { EmployeesManagingComponent } from './admin-tools/employees-managing/employees-managing.component';
@@ -31,6 +30,9 @@ import {ManagersResolver} from './admin-tools/managers-list/managers-resolver.se
 import { ManagersListComponent } from './admin-tools/managers-list/managers-list.component';
 import { ManagerOptionsComponent } from './admin-tools/managers-list/manager-options/manager-options.component';
 import {ManagerAdminPagesAuthGuard} from './auth/guards/manager-admin-pages-auth.guard';
+import {ResultsByManagerResolver} from './employees-with-results-by-manager/results-by-manager-resolver.service';
+import { EmployeesByManagerComponent } from './admin-tools/employees-by-manager/employees-by-manager.component';
+import { EmployeeOptionsComponent } from './admin-tools/employee-options/employee-options.component';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
@@ -44,6 +46,12 @@ const appRoutes: Routes = [
       { path: ':id', component: ManagerOptionsComponent }
     ]
   },
+  {path: 'admin-tools/employees-by-manager', component: EmployeesByManagerComponent,
+    resolve: {employees: EmployeesByManagerResolver},
+    children: [
+      { path: ':id', component: EmployeeOptionsComponent }
+    ]
+  },
 
 
   {path: 'admin-tools/employees-managing', component: EmployeesManagingComponent,
@@ -53,8 +61,11 @@ const appRoutes: Routes = [
     ]
   },
 
-  {path: 'my-employees', component: EmployeesWithResultsByManager,
-    canActivate: [ManagerAdminPagesAuthGuard], resolve: {employees: EmployeeListResolver}
+  {path: 'emps-with-res-by-manager', component: EmployeesWithResultsByManager, canActivate: [ManagerAdminPagesAuthGuard],
+    resolve: {employees: EmployeesByManagerResolver, results: ResultsByManagerResolver},
+    children: [
+      {path: ':id', component: ResultDetailComponent}
+    ]
   },
   {
     path: 'new-survey', component: NewSurveyComponent,
@@ -62,7 +73,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'my-results', component: ResultsComponent,
-    canActivate: [SpecPagesAuthGuard], resolve: {results: ResultsResolver},
+    canActivate: [SpecPagesAuthGuard], resolve: {results: ResultsByEmpResolver},
     children: [
       { path: '', component: ResultsStartComponent },
       {path: ':id', component: ResultDetailComponent}
@@ -91,7 +102,9 @@ const appRoutes: Routes = [
     EmployeesManagingComponent,
     EmpManageComponent,
     ManagersListComponent,
-    ManagerOptionsComponent
+    ManagerOptionsComponent,
+    EmployeesByManagerComponent,
+    EmployeeOptionsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

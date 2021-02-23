@@ -15,14 +15,16 @@ export interface EmployeeDto {
 
 @Injectable({providedIn: 'root'})
 export class EmployeesService {
-  currentManagerId: string;
   loadedEmployees: EmployeeDto[] = [];
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
   getEmployeesByManagerId(managerId: number): Observable<EmployeeDto[]> {
     return this.http
-      .get<EmployeeDto[]>(environment.serverHost + '/rest/emps/by-manager/' + managerId);
+      .get<EmployeeDto[]>(environment.serverHost + '/rest/emps/by-manager/' + managerId)
+      .pipe(
+        tap(newEmps => this.addNotLoadedEmpsYet(newEmps))
+      );
   }
 
   getAllManagers(): Observable<EmployeeDto[]> {

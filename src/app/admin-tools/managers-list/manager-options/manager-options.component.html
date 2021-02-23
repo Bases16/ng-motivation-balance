@@ -2,19 +2,27 @@
   <div class="col-md-12">
     <fieldset>
       <legend>{{manager.firstName + ' ' + manager.lastName}}</legend>
-
-      <div>
-        <p>see manager's employees list and their relevant results</p>
-
-
-          <button class="btn btn-primary" routerLink="/my-employees">
-            Go</button>
-
-
-      </div>
-
+      <a class="btn btn-link" routerLink="/emps-with-res-by-manager">
+          <span class="list-group-item list-group-item-info">
+            see manager's employees list and their relevant results
+          </span>
+      </a><br>
+      <a class="btn btn-link" routerLink="/admin-tools/employees-by-manager">
+          <span class="list-group-item list-group-item-info">
+            manage their employees
+          </span>
+      </a><br>
+      <a class="btn btn-link" (click)="onChangeRole()">
+          <span class="list-group-item list-group-item-warning">
+            make them specialist
+          </span>
+      </a><br>
+      <a class="btn btn-link" (click)="onRemove()">
+          <span class="list-group-item list-group-item-danger">
+            remove manager from base
+          </span>
+      </a><br>
 
     </fieldset>
-
   </div>
 </div>

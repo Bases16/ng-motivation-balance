@@ -15,7 +15,6 @@ export class ManagersListComponent implements OnInit {
   ngOnInit() {
     this.route.data
       .subscribe((data: Data) => {
-        console.log(data['managers']);
         this.managers = data['managers'];
       });
   }

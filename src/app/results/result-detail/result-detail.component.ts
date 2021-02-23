@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ResultModel} from '../result.model';
 import {ResultsService} from '../../results.service';
 
@@ -12,18 +12,29 @@ export class ResultDetailComponent implements OnInit {
   private _result: ResultModel;
   total: number = 0;
 
-  constructor(private route: ActivatedRoute, private resultsService: ResultsService) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private resultsService: ResultsService) { }
 
   ngOnInit() {
-    console.log('ngOnInit in ResultDetail');
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.result = this.resultsService.getResultByEmpId(+params['id']);
-      }
-    );
+    if (this.router.url.includes('my-results')) {
+      this.route.params.subscribe(
+        (params: Params) => {
+          this.result = this.resultsService.getResultByResultOrder(+params['id']);
+        });
+    } else {
+      this.route.params.subscribe(
+        (params: Params) => {
+          this.result = this.resultsService.getResultByEmpId(params['id']);
+        });
+    }
   }
 
   set result(resultModel: ResultModel) {
+    if (!resultModel) {
+      this._result = new ResultModel('', new Date(), []);
+      return;
+    }
     this._result = resultModel;
     this.total = 0;
     for (let pair of resultModel.pairs) {

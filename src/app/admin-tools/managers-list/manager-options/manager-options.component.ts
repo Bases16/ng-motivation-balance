@@ -17,8 +17,16 @@ export class ManagerOptionsComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.manager = this.employeesService.getEmployeeById(params['id']);
-        this.employeesService.currentManagerId = this.manager.id;
+        localStorage.setItem('currentManagerId', this.manager.id);
       }
     );
+  }
+
+  onRemove() {
+
+  }
+
+  onChangeRole() {
+
   }
 }

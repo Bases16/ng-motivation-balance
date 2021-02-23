@@ -7,7 +7,7 @@ import {AuthService} from '../auth/auth.service';
 import {catchError, concatMap, take} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
-export class ResultsResolver implements Resolve<ResultModel[]> {
+export class ResultsByEmpResolver implements Resolve<ResultModel[]> {
 
   constructor(private resultService: ResultsService,
               private authService: AuthService) {}

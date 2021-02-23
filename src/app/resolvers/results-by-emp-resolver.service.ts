@@ -1,5 +1,5 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {ResultModel} from './result.model';
+import {ResultModel} from '../results/result.model';
 import {Observable, of} from 'rxjs';
 import {ResultsService} from '../results.service';
 import {Injectable} from '@angular/core';

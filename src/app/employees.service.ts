@@ -23,14 +23,21 @@ export class EmployeesService {
     return this.http
       .get<EmployeeDto[]>(environment.serverHost + '/rest/emps/by-manager/' + managerId)
       .pipe(
-        tap(newEmps => this.addNotLoadedEmpsYet(newEmps))
+        tap(newEmps => this.updateLoadedEmpsList(newEmps))
+      );
+  }
+
+  getEmployeesWithoutManager(): Observable<EmployeeDto[]> {
+    return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/emps-without-managers/')
+      .pipe(
+        tap(newEmps => this.updateLoadedEmpsList(newEmps))
       );
   }
 
   getAllManagers(): Observable<EmployeeDto[]> {
     return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/managers')
       .pipe(
-        tap(newEmps => this.addNotLoadedEmpsYet(newEmps))
+        tap(newEmps => this.updateLoadedEmpsList(newEmps))
       );
   }
 
@@ -38,7 +45,7 @@ export class EmployeesService {
     return this.loadedEmployees.find(val => val.id == id);
   }
 
-  private addNotLoadedEmpsYet(emps: EmployeeDto[]) {
+  private updateLoadedEmpsList(emps: EmployeeDto[]) {
     for (let emp of emps) {
       let oldEmp = this.loadedEmployees.find(val => val.id == emp.id);
       if (oldEmp == undefined) {
@@ -49,22 +56,16 @@ export class EmployeesService {
     }
   }
 
-  removeEmployee(empId: string) {
-    this.http.post(environment.serverHost + '/rest/emps/remove', empId)
-      .subscribe(
-        () => {
-          // this.router.navigate(['../'], {relativeTo: this.route});
-          this.router.navigate(['/admin-tools/employees-managing']);
-
-        },
-        error => console.log(error)
-      );
+  removeEmployee(empId: string): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/remove', empId);
   }
 
-  changeRole(empId: string) {
-    this.http.post(environment.serverHost + '/rest/emps/change-role', empId)
-      .subscribe(resp => {
-      }, error => console.log(error));
+  changeRole(empId: string): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/change-role', empId);
+  }
+
+  releaseFromManager(empId: string): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/release-from-manager', empId);
   }
 
 }

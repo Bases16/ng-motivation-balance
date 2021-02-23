@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EmployeeDto, EmployeesService} from '../../../employees.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {UtilService} from '../../../util.service';
 
 @Component({
   selector: 'app-manager-options',
@@ -11,7 +12,7 @@ export class ManagerOptionsComponent implements OnInit {
   manager: EmployeeDto;
 
   constructor(private employeesService: EmployeesService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -23,10 +24,18 @@ export class ManagerOptionsComponent implements OnInit {
   }
 
   onRemove() {
-
+    this.employeesService.removeEmployee(this.manager.id)
+      .subscribe(
+        () => UtilService.redirectTo('/admin-tools/managers-list', this.router),
+        error => console.log(error)
+      );
   }
 
   onChangeRole() {
-
+    this.employeesService.changeRole(this.manager.id)
+      .subscribe(
+        () => UtilService.redirectTo('/admin-tools/managers-list', this.router),
+        error => console.log(error)
+      );
   }
 }

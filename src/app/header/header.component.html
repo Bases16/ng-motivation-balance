@@ -18,6 +18,9 @@
         <li routerLinkActive="active" *ngIf="isAuthenticated && userRole === 'ADMIN'">
           <a routerLink="/admin-tools">Admin Tools</a>
         </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated && userRole === 'ADMIN'">
+          <a routerLink="/stats">Overall Stats</a>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

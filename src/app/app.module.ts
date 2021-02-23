@@ -17,47 +17,44 @@ import {AccessDeniedComponent} from './shared/access-denied/access-denied.compon
 import {AdminPagesAuthGuard} from './auth/guards/admin-pages-auth.guard';
 import {SpecPagesAuthGuard} from './auth/guards/spec-pages-auth.guard';
 import {ResultsComponent} from './results/results.component';
-import {ResultsByEmpResolver} from './results/results-by-emp-resolver.service';
+import {ResultsByEmpResolver} from './resolvers/results-by-emp-resolver.service';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import { ResultsStartComponent } from './results/results-start/results-start.component';
-import {FactorsResolver} from './new-survey/factors-resolver.service';
-import {EmployeesByManagerResolver} from './employees-with-results-by-manager/employees-by-manager-resolver.service';
+import {FactorsResolver} from './resolvers/factors-resolver.service';
+import {EmployeesByManagerResolver} from './resolvers/employees-by-manager-resolver.service';
 import { FactorsManagingComponent } from './admin-tools/factors-managing/factors-managing.component';
 import { StatsComponent } from './admin-tools/stats/stats.component';
-import { EmployeesManagingComponent } from './admin-tools/employees-managing/employees-managing.component';
-import { EmpManageComponent } from './admin-tools/employees-managing/emp-manage/emp-manage.component';
-import {ManagersResolver} from './admin-tools/managers-list/managers-resolver.service';
+import {ManagersResolver} from './resolvers/managers-resolver.service';
 import { ManagersListComponent } from './admin-tools/managers-list/managers-list.component';
 import { ManagerOptionsComponent } from './admin-tools/managers-list/manager-options/manager-options.component';
 import {ManagerAdminPagesAuthGuard} from './auth/guards/manager-admin-pages-auth.guard';
-import {ResultsByManagerResolver} from './employees-with-results-by-manager/results-by-manager-resolver.service';
-import { EmployeesByManagerComponent } from './admin-tools/employees-by-manager/employees-by-manager.component';
+import {ResultsByManagerResolver} from './resolvers/results-by-manager-resolver.service';
+import { EmployeesListComponent } from './admin-tools/employees-list/employees-list.component';
 import { EmployeeOptionsComponent } from './admin-tools/employee-options/employee-options.component';
+import {EmployeesWithoutManagerResolver} from './resolvers/employees-without-managers-resolver.service';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
 
   {path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard]},
   {path: 'admin-tools/factors-managing', component: FactorsManagingComponent},
-  {path: 'admin-tools/stats', component: StatsComponent},
+  {path: 'stats', component: StatsComponent},
   {path: 'admin-tools/managers-list', component: ManagersListComponent,
     resolve: {managers: ManagersResolver},
     children: [
       { path: ':id', component: ManagerOptionsComponent }
     ]
   },
-  {path: 'admin-tools/employees-by-manager', component: EmployeesByManagerComponent,
+  {path: 'admin-tools/employees-by-manager', component: EmployeesListComponent,
     resolve: {employees: EmployeesByManagerResolver},
     children: [
       { path: ':id', component: EmployeeOptionsComponent }
     ]
   },
-
-
-  {path: 'admin-tools/employees-managing', component: EmployeesManagingComponent,
-    resolve: {employees: ManagersResolver},
+  {path: 'admin-tools/employees-without-manager', component: EmployeesListComponent,
+    resolve: {employees: EmployeesWithoutManagerResolver},
     children: [
-      { path: ':id', component: EmpManageComponent }
+      { path: ':id', component: EmployeeOptionsComponent }
     ]
   },
 
@@ -99,11 +96,9 @@ const appRoutes: Routes = [
     ResultsStartComponent,
     FactorsManagingComponent,
     StatsComponent,
-    EmployeesManagingComponent,
-    EmpManageComponent,
     ManagersListComponent,
     ManagerOptionsComponent,
-    EmployeesByManagerComponent,
+    EmployeesListComponent,
     EmployeeOptionsComponent
   ],
   imports: [

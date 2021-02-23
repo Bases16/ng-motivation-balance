@@ -12,11 +12,6 @@ export class FactorsResolver implements Resolve<string[]> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string[]> {
     return this.factorsService.getActiveFactorNames()
       .pipe(
-        tap(factors => {
-          console.log('log in factor resolver tap()');
-          console.log(factors);
-          return factors;
-        }),
         catchError(err => {
           console.log(err);
           return of(null);

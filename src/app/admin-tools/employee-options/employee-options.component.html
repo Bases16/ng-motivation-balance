@@ -2,13 +2,21 @@
   <div class="col-md-12">
     <fieldset>
       <legend>{{employee.firstName + ' ' + employee.lastName}}</legend>
-
-      <a class="btn btn-link" routerLink="/emps-with-res-by-manager">
-          <span class="list-group-item list-group-item-info">
-            what should be here?
+      <a *ngIf="pathPart === 'employees-by-manager'" class="btn btn-link" (click)="onReleaseFromManager()">
+          <span class="list-group-item list-group-item-warning">
+            release from current manager
           </span>
-      </a>
-
+      </a><br>
+      <a class="btn btn-link" (click)="onChangeRole()">
+          <span class="list-group-item list-group-item-warning">
+            make them manager
+          </span>
+      </a><br>
+      <a class="btn btn-link" (click)="onRemove()">
+          <span class="list-group-item list-group-item-danger">
+            remove specialist from base
+          </span>
+      </a><br>
     </fieldset>
   </div>
 </div>

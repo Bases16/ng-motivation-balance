@@ -14,7 +14,6 @@ export class AuthPageGuard implements CanActivate {
     return this.authService.user.pipe(
       take(1),
       map(user => {
-        console.log('inside authPageGuard');
         if (!user) {
           return true;
         } else if (user.role === 'ADMIN') {

@@ -20,7 +20,6 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    console.log('options ngOnInit');
     this.route.params.subscribe(
       (params: Params) => {
         this.employee = this.employeesService.getEmployeeById(params['id']);

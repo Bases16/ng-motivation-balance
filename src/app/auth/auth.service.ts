@@ -41,13 +41,11 @@ export class AuthService {
       .pipe(
         // catchError(this.handleError),
         catchError(errorRes => {
-          console.log('errorRes:');
           console.log(errorRes);
           return this.handleError(errorRes);
         }),
         tap(resData => {
           // this.handleAuthentication(resData.email, resData.token);
-          console.log('resData:');
           console.log(resData);
         })
       );
@@ -64,7 +62,6 @@ export class AuthService {
       )
       .pipe(
         catchError(errorRes => {
-          console.log('errorRes:');
           console.log(errorRes);
           return this.handleError(errorRes);
         }),

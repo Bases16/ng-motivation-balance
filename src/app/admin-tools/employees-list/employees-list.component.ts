@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {EmployeeDto} from '../../employees.service';
+import {EmployeeDto, EmployeesService} from '../../employees.service';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 
 @Component({
@@ -10,8 +10,10 @@ import {ActivatedRoute, Data, Router} from '@angular/router';
 export class EmployeesListComponent implements OnInit {
   employees: EmployeeDto[];
   pathPart: string = '';
+  currentManager: EmployeeDto;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router,
+              private employeesService: EmployeesService) {}
 
   ngOnInit() {
     this.route.data
@@ -20,5 +22,10 @@ export class EmployeesListComponent implements OnInit {
         this.pathPart = this.router.url.includes('employees-by-manager')
           ? 'employees-by-manager' : 'employees-without-manager';
       });
+
+    let currentManagerId = localStorage.getItem('currentManagerId');
+    if (currentManagerId) {
+      this.currentManager = this.employeesService.getEmployeeById(currentManagerId);
+    }
   }
 }

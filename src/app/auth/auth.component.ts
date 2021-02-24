@@ -36,7 +36,6 @@ export class AuthComponent implements OnInit {
     if (this.isLoginMode) {
       this.authService.login(email, password)
         .subscribe(resData => {
-          console.log(resData);
           this.isLoading = false;
           this.isLoginMode = true;
           this.authService.user.pipe(
@@ -58,7 +57,6 @@ export class AuthComponent implements OnInit {
       const lastName = form.value.lastName;
       this.authService.signUp(email, password, firstName, lastName)
         .subscribe(resData => {
-          console.log(resData);
           this.isLoading = false;
           this.router.navigate(['/auth']);
           this.isLoginMode = true;

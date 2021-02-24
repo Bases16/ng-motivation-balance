@@ -15,9 +15,6 @@ export class AuthGuard implements CanActivate {
     return this.authService.user.pipe(
       take(1),
       map(user => {
-        console.log('inside authGuard');
-        console.log(route);
-        console.log(state);
         const isAuth = !!user;
         if (isAuth) {
           return true;

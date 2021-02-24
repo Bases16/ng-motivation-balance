@@ -32,8 +32,6 @@ export class NewSurveyComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.surveyForm);
-
     let estimationPairs: { factorName: string, estimation: string }[] = [];
 
     this.activeFactors.forEach(factor => {
@@ -41,13 +39,6 @@ export class NewSurveyComponent implements OnInit {
         { factorName: factor, estimation: this.surveyForm.value[factor] }
       );
     });
-
-    console.log(estimationPairs);
-    console.log(this.empId);
-
-    console.log(JSON
-        .stringify({empId: '' + this.empId, estimationPairs: estimationPairs}));
-
     this.resultsService.saveResult(      {
       empId: '' + this.empId, estimationPairs: estimationPairs
     }).subscribe(resp => console.log(resp));

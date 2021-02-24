@@ -40,29 +40,23 @@ export class FactorsManagingComponent implements OnInit {
     this.factorsService.createNewFactor(newFactorName)
       .subscribe(
         resp => {
-          console.log(resp);
           this._allFactors.unshift({name: newFactorName, status: 'ACTIVE'});
         },
         error => {
-          console.log('My Error:');
           console.log(error);
         });
   }
 
   onChangeStatusClick(factorName: string) {
-    console.log(factorName);
-
     this.factorsService.changeFactorStatus(factorName)
       .subscribe(
         resp => {
-          console.log(resp);
           let factorDto = this._allFactors.find(factor => {
             return factor.name == factorName;
           });
           factorDto.status = factorDto.status === 'ACTIVE' ? 'REMOVED' : 'ACTIVE';
         },
         error => {
-          console.log('My Error:');
           console.log(error);
         });
   }

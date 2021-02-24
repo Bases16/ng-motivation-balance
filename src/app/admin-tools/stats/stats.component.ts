@@ -29,7 +29,6 @@ export class StatsComponent implements OnInit {
     this.statsService.getAllRelevEstimPairs()
       .subscribe(
         pairs => {
-          console.log(pairs);
           this.allRelevPairs = pairs;
           this.calcStat();
         },

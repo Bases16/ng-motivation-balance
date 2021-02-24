@@ -15,12 +15,17 @@ export class ManagerOptionsComponent implements OnInit {
               private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
+    console.log('manager-options init');
     this.route.params.subscribe(
       (params: Params) => {
         this.manager = this.employeesService.getEmployeeById(params['id']);
         localStorage.setItem('currentManagerId', this.manager.id);
       }
     );
+  }
+
+  ngOnDestroy() {
+    console.log('manager-options destroy');
   }
 
   onRemove() {

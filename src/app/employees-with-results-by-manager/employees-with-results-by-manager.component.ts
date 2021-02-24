@@ -24,7 +24,6 @@ export class EmployeesWithResultsByManager implements OnInit {
       .subscribe((data: Data) => {
         this.results = data['results'];
         this.resultsService.userResults = this.results;
-        console.log(this.results);
       });
   }
 

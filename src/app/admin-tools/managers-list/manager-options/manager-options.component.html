@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <fieldset>
       <legend>{{manager.firstName + ' ' + manager.lastName}}</legend>
-      <a class="btn btn-link" routerLink="/emps-with-res-by-manager">
+      <a class="btn btn-link" [routerLink]="['/emps-with-res-by-manager', manager.id]">
           <span class="list-group-item list-group-item-info">
             see manager's employees list and their relevant results
           </span>

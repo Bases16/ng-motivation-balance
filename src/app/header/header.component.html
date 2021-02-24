@@ -13,7 +13,7 @@
           <a routerLink="/my-results">My Results</a>
         </li>
         <li routerLinkActive="active" *ngIf="isAuthenticated && userRole === 'MANAGER'">
-          <a routerLink="/emps-with-res-by-manager">My Employees</a>
+          <a [routerLink]="['/emps-with-res-by-manager', 'own']">My Employees</a>
         </li>
         <li routerLinkActive="active" *ngIf="isAuthenticated && userRole === 'ADMIN'">
           <a routerLink="/admin-tools">Admin Tools</a>

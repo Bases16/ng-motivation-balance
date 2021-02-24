@@ -67,7 +67,7 @@ const appRoutes: Routes = [
     ]
   },
 
-  {path: 'emps-with-res-by-manager', component: EmployeesWithResultsByManager, canActivate: [ManagerAdminPagesAuthGuard],
+  {path: 'emps-with-res-by-manager/:managerId', component: EmployeesWithResultsByManager, canActivate: [ManagerAdminPagesAuthGuard],
     resolve: {employees: EmployeesByManagerResolver, results: ResultsByManagerResolver},
     children: [
       {path: ':id', component: ResultDetailComponent}

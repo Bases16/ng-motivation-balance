@@ -1,13 +1,14 @@
 <div class="row">
   <div class="col-md-6">
-    <h3>Choose employee to see their last result</h3>
+    <h4>Choose employee to see their last result</h4>
+    <h4>{{manager.firstName + ' ' + manager.lastName}}</h4>
     <div class="alert alert-info text-center" *ngIf="employees.length == 0">
       <h4>There are no specialists yet</h4>
     </div>
     <a *ngFor="let emp of employees"
        style="cursor: pointer"
        class="list-group-item clearfix"
-       [routerLink]="['/emps-with-res-by-manager', emp.id]"
+       [routerLink]="['/emps-with-res-by-manager', manager.id, emp.id]"
        routerLinkActive="active">
       <div class="pull-left">
         <p class="list-group-item-heading">{{emp.firstName + ' ' + emp.lastName + ' - ' + emp.empRole}}</p>

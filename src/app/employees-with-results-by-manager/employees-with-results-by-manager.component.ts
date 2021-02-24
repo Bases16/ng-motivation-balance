@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Data} from '@angular/router';
-import {EmployeeDto} from '../employees.service';
+import {ActivatedRoute, Data, Params} from '@angular/router';
+import {EmployeeDto, EmployeesService} from '../employees.service';
 import {ResultModel} from '../results/result.model';
 import {ResultsService} from '../results.service';
 
@@ -12,8 +12,10 @@ import {ResultsService} from '../results.service';
 export class EmployeesWithResultsByManager implements OnInit {
   employees: EmployeeDto[];
   results: ResultModel[];
+  manager: EmployeeDto;
 
-  constructor(private route: ActivatedRoute, private resultsService: ResultsService) {}
+  constructor(private route: ActivatedRoute, private resultsService: ResultsService,
+              private employeesService: EmployeesService) {}
 
   ngOnInit() {
     this.route.data
@@ -24,6 +26,13 @@ export class EmployeesWithResultsByManager implements OnInit {
       .subscribe((data: Data) => {
         this.results = data['results'];
         this.resultsService.userResults = this.results;
+      });
+    this.route.params.subscribe(
+      (params: Params) => {
+        let manager = this.employeesService.getEmployeeById(params['managerId']);
+        this.manager = manager ? manager : {
+          id: 'own', managerId: '', firstName: '', lastName: '', empRole: ''
+        }
       });
   }
 

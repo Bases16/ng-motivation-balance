@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {Observable, Subject} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -46,6 +46,19 @@ export class EmployeesService {
     return this.loadedEmployees.find(val => val.id == id);
   }
 
+  searchEmployee(fir: string, sec: string): Observable<EmployeeDto[]> {
+    let params: HttpParams;
+    if (fir && sec) {
+      params = new HttpParams().set('first', fir).set('second', sec);
+    } else {
+      params = new HttpParams().set('first', fir);
+    }
+    return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/search-employee',
+      {
+        params: params
+      });
+  }
+
   private updateLoadedEmpsList(emps: EmployeeDto[]) {
     for (let emp of emps) {
       let oldEmp = this.loadedEmployees.find(val => val.id == emp.id);
@@ -72,4 +85,5 @@ export class EmployeesService {
   saveAssignation(empId, managerId): Observable<any> {
     return this.http.post(environment.serverHost + '/rest/emps/assign-manager/' + managerId, empId);
   }
+
 }

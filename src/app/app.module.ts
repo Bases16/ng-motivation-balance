@@ -19,55 +19,70 @@ import {SpecPagesAuthGuard} from './auth/guards/spec-pages-auth.guard';
 import {ResultsComponent} from './results/results.component';
 import {ResultsByEmpResolver} from './resolvers/results-by-emp-resolver.service';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
-import { ResultsStartComponent } from './results/results-start/results-start.component';
+import {ResultsStartComponent} from './results/results-start/results-start.component';
 import {FactorsResolver} from './resolvers/factors-resolver.service';
 import {EmployeesByManagerResolver} from './resolvers/employees-by-manager-resolver.service';
-import { FactorsManagingComponent } from './admin-tools/factors-managing/factors-managing.component';
-import { StatsComponent } from './admin-tools/stats/stats.component';
+import {FactorsManagingComponent} from './admin-tools/factors-managing/factors-managing.component';
+import {StatsComponent} from './admin-tools/stats/stats.component';
 import {ManagersResolver} from './resolvers/managers-resolver.service';
-import { ManagersListComponent } from './admin-tools/managers-list/managers-list.component';
-import { ManagerOptionsComponent } from './admin-tools/managers-list/manager-options/manager-options.component';
+import {ManagersListComponent} from './admin-tools/managers-list/managers-list.component';
+import {ManagerOptionsComponent} from './admin-tools/managers-list/manager-options/manager-options.component';
 import {ManagerAdminPagesAuthGuard} from './auth/guards/manager-admin-pages-auth.guard';
 import {ResultsByManagerResolver} from './resolvers/results-by-manager-resolver.service';
-import { EmployeesListComponent } from './admin-tools/employees-list/employees-list.component';
-import { EmployeeOptionsComponent } from './admin-tools/employee-options/employee-options.component';
+import {EmployeesListComponent} from './admin-tools/employees-list/employees-list.component';
+import {EmployeeOptionsComponent} from './admin-tools/employee-options/employee-options.component';
 import {EmployeesWithoutManagerResolver} from './resolvers/employees-without-managers-resolver.service';
-import { AssignManagerListComponent } from './admin-tools/assign-manager-list/assign-manager-list.component';
+import {AssignManagerListComponent} from './admin-tools/assign-manager-list/assign-manager-list.component';
+import {SearchEmployeesComponent} from './admin-tools/search-employees/search-employees.component';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
 
   {path: 'admin-tools', component: AdminToolsComponent, canActivate: [AdminPagesAuthGuard]},
-  {path: 'admin-tools/factors-managing', component: FactorsManagingComponent},
-  {path: 'stats', component: StatsComponent},
-  {path: 'admin-tools/managers-list', component: ManagersListComponent,
+  {path: 'admin-tools/factors-managing', component: FactorsManagingComponent, canActivate: [AdminPagesAuthGuard]},
+  {path: 'stats', component: StatsComponent, canActivate: [AdminPagesAuthGuard]},
+  {path: 'admin-tools/search-employees', component: SearchEmployeesComponent, canActivate: [AdminPagesAuthGuard]},
+  {
+    path: 'admin-tools/managers-list', component: ManagersListComponent, canActivate: [AdminPagesAuthGuard],
     resolve: {managers: ManagersResolver},
     children: [
-      { path: ':id', component: ManagerOptionsComponent }
+      {path: ':id', component: ManagerOptionsComponent}
     ]
   },
-  {path: 'admin-tools/employees-by-manager/:managerId', component: EmployeesListComponent,
+  {
+    path: 'admin-tools/employees-by-manager/:managerId', component: EmployeesListComponent,
+    canActivate: [AdminPagesAuthGuard],
     resolve: {employees: EmployeesByManagerResolver},
     children: [
-      { path: ':id', component: EmployeeOptionsComponent,
-        children: [ {path: 'assign-new-manager', component: AssignManagerListComponent,
-          resolve: {managers: ManagersResolver} }
+      {
+        path: ':id', component: EmployeeOptionsComponent,
+        children: [{
+          path: 'assign-new-manager', component: AssignManagerListComponent,
+          resolve: {managers: ManagersResolver}
+        }
         ]
       }
     ]
   },
-  {path: 'admin-tools/employees-without-manager', component: EmployeesListComponent,
+  {
+    path: 'admin-tools/employees-without-manager', component: EmployeesListComponent,
+    canActivate: [AdminPagesAuthGuard],
     resolve: {employees: EmployeesWithoutManagerResolver},
     children: [
-      { path: ':id', component: EmployeeOptionsComponent,
-        children: [ {path: 'assign-new-manager', component: AssignManagerListComponent,
-                     resolve: {managers: ManagersResolver} }
+      {
+        path: ':id', component: EmployeeOptionsComponent,
+        children: [{
+          path: 'assign-new-manager', component: AssignManagerListComponent,
+          resolve: {managers: ManagersResolver}
+        }
         ]
       }
     ]
   },
 
-  {path: 'emps-with-res-by-manager/:managerId', component: EmployeesWithResultsByManager, canActivate: [ManagerAdminPagesAuthGuard],
+  {
+    path: 'emps-with-res-by-manager/:managerId', component: EmployeesWithResultsByManager,
+    canActivate: [ManagerAdminPagesAuthGuard],
     resolve: {employees: EmployeesByManagerResolver, results: ResultsByManagerResolver},
     children: [
       {path: ':id', component: ResultDetailComponent}
@@ -81,8 +96,8 @@ const appRoutes: Routes = [
     path: 'my-results', component: ResultsComponent,
     canActivate: [SpecPagesAuthGuard], resolve: {results: ResultsByEmpResolver},
     children: [
-      { path: '', component: ResultsStartComponent },
-      { path: ':id', component: ResultDetailComponent }
+      {path: '', component: ResultsStartComponent},
+      {path: ':id', component: ResultDetailComponent}
     ]
   },
 
@@ -109,7 +124,8 @@ const appRoutes: Routes = [
     ManagerOptionsComponent,
     EmployeesListComponent,
     EmployeeOptionsComponent,
-    AssignManagerListComponent
+    AssignManagerListComponent,
+    SearchEmployeesComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

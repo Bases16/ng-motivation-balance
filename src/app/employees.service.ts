@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -16,6 +16,7 @@ export interface EmployeeDto {
 @Injectable({providedIn: 'root'})
 export class EmployeesService {
   loadedEmployees: EmployeeDto[] = [];
+  newManagerWasChosen = new Subject<number>();
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
@@ -68,4 +69,7 @@ export class EmployeesService {
     return this.http.post(environment.serverHost + '/rest/emps/release-from-manager', empId);
   }
 
+  saveAssignation(empId, managerId): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/assign-manager/' + managerId, empId);
+  }
 }

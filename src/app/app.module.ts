@@ -32,6 +32,7 @@ import {ResultsByManagerResolver} from './resolvers/results-by-manager-resolver.
 import { EmployeesListComponent } from './admin-tools/employees-list/employees-list.component';
 import { EmployeeOptionsComponent } from './admin-tools/employee-options/employee-options.component';
 import {EmployeesWithoutManagerResolver} from './resolvers/employees-without-managers-resolver.service';
+import { AssignManagerListComponent } from './admin-tools/assign-manager-list/assign-manager-list.component';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
@@ -54,7 +55,11 @@ const appRoutes: Routes = [
   {path: 'admin-tools/employees-without-manager', component: EmployeesListComponent,
     resolve: {employees: EmployeesWithoutManagerResolver},
     children: [
-      { path: ':id', component: EmployeeOptionsComponent }
+      { path: ':id', component: EmployeeOptionsComponent,
+        children: [ {path: 'assign-new-manager', component: AssignManagerListComponent,
+                     resolve: {managers: ManagersResolver} }
+        ]
+      }
     ]
   },
 
@@ -73,7 +78,7 @@ const appRoutes: Routes = [
     canActivate: [SpecPagesAuthGuard], resolve: {results: ResultsByEmpResolver},
     children: [
       { path: '', component: ResultsStartComponent },
-      {path: ':id', component: ResultDetailComponent}
+      { path: ':id', component: ResultDetailComponent }
     ]
   },
 
@@ -99,7 +104,8 @@ const appRoutes: Routes = [
     ManagersListComponent,
     ManagerOptionsComponent,
     EmployeesListComponent,
-    EmployeeOptionsComponent
+    EmployeeOptionsComponent,
+    AssignManagerListComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

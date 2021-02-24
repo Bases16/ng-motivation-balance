@@ -17,6 +17,18 @@
             remove specialist from base
           </span>
       </a><br>
+      <a class="btn btn-link">
+          <span class="list-group-item list-group-item-warning"
+                routerLink="assign-new-manager"
+                routerLinkActive="active">
+            assign new manager
+          </span>
+      </a><button *ngIf="assignMode"
+                  [disabled]="!newManagerId"
+                  class="btn btn-success" (click)="onSaveAssignation()">save</button>
     </fieldset>
   </div>
+</div>
+<div class="row">
+  <router-outlet></router-outlet>
 </div>

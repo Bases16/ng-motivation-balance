@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3>Select a new manager</h3>
+    <a *ngFor="let emp of managers"
+       style="cursor: pointer"
+       class="list-group-item clearfix">
+      <div class="text-center">
+        <p class="list-group-item-heading">{{emp.firstName + ' ' + emp.lastName}}
+          <button style="margin-left: 20px" class="btn btn-success"
+                  (click)="onNewManagerChosen($event, emp.id)">choose</button>
+        </p>
+      </div>
+    </a>
+  </div>
+</div>

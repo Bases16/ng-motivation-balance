@@ -46,7 +46,7 @@ const appRoutes: Routes = [
       { path: ':id', component: ManagerOptionsComponent }
     ]
   },
-  {path: 'admin-tools/employees-by-manager', component: EmployeesListComponent,
+  {path: 'admin-tools/employees-by-manager/:managerId', component: EmployeesListComponent,
     resolve: {employees: EmployeesByManagerResolver},
     children: [
       { path: ':id', component: EmployeeOptionsComponent,

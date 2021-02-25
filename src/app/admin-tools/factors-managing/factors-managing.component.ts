@@ -11,13 +11,11 @@ export class FactorsManagingComponent implements OnInit {
   @ViewChild('ngForm') addButtonForm: NgForm;
   private _allFactors: FactorDto[] = [];
 
-  constructor(private factorsService: FactorsService) {
-  }
+  constructor(private factorsService: FactorsService) {}
 
   ngOnInit() {
     this.factorsService.getAllFactors()
       .subscribe(factors => this.allFactors = factors);
-
   }
 
   set allFactors(factors: FactorDto[]) {
@@ -39,7 +37,7 @@ export class FactorsManagingComponent implements OnInit {
     const newFactorName = this.addButtonForm.value.newFactorName;
     this.factorsService.createNewFactor(newFactorName)
       .subscribe(
-        resp => {
+        () => {
           this._allFactors.unshift({name: newFactorName, status: 'ACTIVE'});
         },
         error => {

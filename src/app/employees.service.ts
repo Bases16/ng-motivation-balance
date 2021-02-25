@@ -4,14 +4,8 @@ import {environment} from '../environments/environment';
 import {Observable, Subject} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {EmployeeDto} from './auth/models-container.model';
 
-export interface EmployeeDto {
-  id: string;
-  managerId: string;
-  firstName: string;
-  lastName: string;
-  empRole: string;
-}
 
 @Injectable({providedIn: 'root'})
 export class EmployeesService {

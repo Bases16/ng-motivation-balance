@@ -15,11 +15,9 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error: string = null;
 
-  constructor(private router: Router, private authService: AuthService) {
-  }
+  constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit() {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -48,7 +46,6 @@ export class AuthComponent implements OnInit {
               }
             })).subscribe();
         }, errorMessage => {
-          console.log(errorMessage);
           this.error = errorMessage;
           this.isLoading = false;
         });
@@ -61,13 +58,11 @@ export class AuthComponent implements OnInit {
           this.router.navigate(['/auth']);
           this.isLoginMode = true;
         }, errorMessage => {
-          console.log(errorMessage);
           this.error = errorMessage;
           this.isLoading = false;
         });
     }
     form.reset();
   }
-
 
 }

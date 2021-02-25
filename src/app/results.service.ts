@@ -4,12 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {ResultDto} from './auth/models-container.model';
 
-export interface ResultDto {
-  empId: string;
-  passDatetime?: string;
-  estimationPairs: { factorName: string, estimation: string }[]
-}
 
 @Injectable({providedIn: 'root'})
 export class ResultsService {

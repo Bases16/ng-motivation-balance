@@ -12,6 +12,7 @@ export class StatsComponent implements OnInit {
   allRelevPairs: EstimationPairDto[] = [];
   factorStats: FactorStat[] = [];
   activeFactors: Factor[] = [];
+  error: string;
 
   constructor(private statsService: StatsService) {}
 
@@ -22,9 +23,8 @@ export class StatsComponent implements OnInit {
           this.allRelevPairs = pairs;
           this.calcStat();
         },
-        error => {
-          console.log(error);
-        });
+        (errorMessage) => this.error = errorMessage
+      );
   }
 
   private calcStat() {
@@ -59,6 +59,12 @@ export class StatsComponent implements OnInit {
         dislikePercent: Math.round((dislikes / factor.estimationsSize) * 100 * 10) / 10
       });
     }
+
+    this.factorStats
+      .sort((fs1, fs2) => {
+        if (fs1.factorName < fs2.factorName) return -1;
+        if (fs1.factorName > fs2.factorName) return 1;
+      });
   }
 
 }

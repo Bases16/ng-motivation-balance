@@ -16,14 +16,12 @@ export class ResultsByEmpResolver implements Resolve<ResultModel[]> {
     return this.authService.user.pipe(
       take(1),
       concatMap(user => {
-        return this.resultService.getResultsByEmpId(user.empId)
+        return this.resultService.getResultsByEmpId(user.empId);
       }),
       catchError(err => {
-        console.log(err);
-        return of(null);
+        return of(undefined);
       })
     );
   }
-
 
 }

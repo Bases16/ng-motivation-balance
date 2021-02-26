@@ -14,16 +14,23 @@ export class NewSurveyComponent implements OnInit {
   @ViewChild('ngForm') surveyForm: NgForm;
   activeFactors: string[];
   empId: number;
+  error: string;
+  resolverFailed = false;
+  successSend = false;
 
   constructor(private route: ActivatedRoute,
               private resultsService: ResultsService,
-              private authService: AuthService) {}
+              private authService: AuthService) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.data
-      .subscribe( (data: Data) => {
+      .subscribe((data: Data) => {
+        if (data['activeFactors'] === undefined) {
+          this.resolverFailed = true;
+          return;
+        }
         this.activeFactors = data['activeFactors'];
-        // this.factorsService.activeFactors = this.factors;
       });
     this.authService.user.pipe(
       take(1),
@@ -32,16 +39,21 @@ export class NewSurveyComponent implements OnInit {
   }
 
   onSubmit() {
+    this.successSend = false;
+
     let estimationPairs: { factorName: string, estimation: string }[] = [];
 
     this.activeFactors.forEach(factor => {
       estimationPairs.push(
-        { factorName: factor, estimation: this.surveyForm.value[factor] }
+        {factorName: factor, estimation: this.surveyForm.value[factor]}
       );
     });
-    this.resultsService.saveResult(      {
+    this.resultsService.saveResult({
       empId: '' + this.empId, estimationPairs: estimationPairs
-    }).subscribe(resp => console.log(resp));
+    }).subscribe(
+      () => this.successSend = true,
+      error => this.error = error
+    );
 
     this.surveyForm.reset();
   }

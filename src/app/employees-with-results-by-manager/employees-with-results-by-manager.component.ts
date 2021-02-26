@@ -10,9 +10,10 @@ import {EmployeeDto, ResultModel} from '../models-container.model';
   styleUrls: ['./employees-with-results-by-manager.component.css']
 })
 export class EmployeesWithResultsByManager implements OnInit {
-  employees: EmployeeDto[];
+  private _employees: EmployeeDto[];
   results: ResultModel[];
   manager: EmployeeDto;
+  resolverFailed = false;
 
   constructor(private route: ActivatedRoute, private resultsService: ResultsService,
               private employeesService: EmployeesService) {}
@@ -20,10 +21,18 @@ export class EmployeesWithResultsByManager implements OnInit {
   ngOnInit() {
     this.route.data
       .subscribe((data: Data) => {
+        if (data['employees'] === undefined) {
+          this.resolverFailed = true;
+          return;
+        }
         this.employees = data['employees'];
       });
     this.route.data
       .subscribe((data: Data) => {
+        if (data['results'] === undefined) {
+          this.resolverFailed = true;
+          return;
+        }
         this.results = data['results'];
         this.resultsService.userResults = this.results;
       });
@@ -34,6 +43,18 @@ export class EmployeesWithResultsByManager implements OnInit {
           id: 'own', managerId: '', firstName: '', lastName: '', empRole: ''
         }
       });
+  }
+
+  get employees() {
+    return this._employees;
+  }
+
+  set employees(employees: EmployeeDto[]) {
+    this._employees = employees.sort((e1, e2) => {
+      if (e1.lastName < e2.lastName) return -1;
+      if (e1.lastName > e2.lastName) return 1;
+      else return 0;
+    });
   }
 
 }

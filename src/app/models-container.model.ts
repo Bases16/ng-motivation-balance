@@ -1,10 +1,15 @@
 export class ResultModel {
-
   constructor(public empId: string,
               public passDatetime: Date,
               public pairs: {factorName: string, estimation: string}[]) {
   }
 }
+
+export interface ResultsResolved {
+  results: ResultModel[];
+  error?: any;
+}
+
 
 export class User {
   constructor(public empId: number,
@@ -78,3 +83,5 @@ export interface EmployeeDto {
   lastName: string;
   empRole: string;
 }
+
+

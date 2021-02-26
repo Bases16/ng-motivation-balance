@@ -14,8 +14,10 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
   employee: EmployeeDto;
   pathPart: string = '';
   assignMode: boolean = false;
+  currentManagerId: string = '';
   newManagerId: number;
   newManagerSub: Subscription;
+  error: string;
 
   constructor(private employeesService: EmployeesService,
               private route: ActivatedRoute, private router: Router) {}
@@ -37,6 +39,10 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
     });
     this.newManagerSub = this.employeesService.newManagerWasChosen
       .subscribe(empId => this.newManagerId = empId);
+
+    if (this.router.url.includes('employees-by-manager')) {
+      this.currentManagerId = this.router.url.match(/manager\/(\d+)/)[1];
+    }
   }
 
   ngOnDestroy() {
@@ -46,31 +52,39 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
   onChangeRole() {
     this.employeesService.changeRole(this.employee.id)
       .subscribe(
-        () => UtilService.redirectTo('/admin-tools/' + this.pathPart, this.router),
-        error => console.log(error)
+        () => UtilService.redirectTo(
+          '/admin-tools/' + this.pathPart + '/' + this.currentManagerId, this.router),
+        error => this.error = error
       );
   }
+
   onRemove() {
-    this.employeesService.removeEmployee(this.employee.id)
-      .subscribe(
-        () => UtilService.redirectTo('/admin-tools/' + this.pathPart, this.router),
-        error => console.log(error)
-      );
+    if (confirm('ARE YOU SURE TO DELETE ' + this.employee.firstName
+         + ' ' + this.employee.lastName + ' FROM BASE')) {
+      this.employeesService.removeEmployee(this.employee.id)
+        .subscribe(
+          () => UtilService.redirectTo(
+            '/admin-tools/' + this.pathPart + '/' + this.currentManagerId, this.router),
+          error => this.error = error
+        );
+    }
   }
 
   onReleaseFromManager() {
     this.employeesService.releaseFromManager(this.employee.id)
       .subscribe(
-        () => UtilService.redirectTo('/admin-tools/employees-by-manager', this.router),
-        error => console.log(error)
+        () => UtilService.redirectTo(
+          '/admin-tools/employees-by-manager/' + this.currentManagerId, this.router),
+        error => this.error = error
       );
   }
 
   onSaveAssignation() {
     this.employeesService.saveAssignation(this.employee.id, this.newManagerId)
       .subscribe(
-        () => UtilService.redirectTo('/admin-tools/' + this.pathPart, this.router),
-        error => console.log(error)
+        () => UtilService.redirectTo(
+          '/admin-tools/' + this.pathPart + '/' + this.currentManagerId, this.router),
+        error => this.error = error
       );
   }
 }

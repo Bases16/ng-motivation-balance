@@ -25,7 +25,7 @@ export class EmployeesByManagerResolver implements Resolve<EmployeeDto[]> {
       }),
       catchError(err => {
         console.log(err);
-        return of(null);
+        return of(undefined);
       })
     );
   }

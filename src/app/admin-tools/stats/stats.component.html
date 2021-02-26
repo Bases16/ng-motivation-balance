@@ -1,3 +1,8 @@
+<div class="row">
+  <div class="col-md-12">
+    <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+  </div>
+</div>
 <div *ngFor="let stat of factorStats">
   <h3>{{stat.factorName}}</h3>
   <div class="percentage-block">

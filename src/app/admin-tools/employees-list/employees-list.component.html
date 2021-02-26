@@ -2,7 +2,6 @@
   <div class="col-md-6">
     <h4 *ngIf="pathPart === 'employees-without-manager' ">Employees without manager:</h4>
     <h4 *ngIf="!(pathPart === 'employees-without-manager')">{{manager.firstName + ' ' + manager.lastName}}</h4>
-    <h4>Choose employee to manage</h4>
     <a *ngFor="let emp of employees"
        style="cursor: pointer"
        class="list-group-item clearfix"
@@ -15,5 +14,10 @@
   </div>
   <div class="col-md-6">
     <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-error-notification *ngIf="resolverFailed"></app-error-notification>
   </div>
 </div>

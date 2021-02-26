@@ -36,6 +36,11 @@ export class ResultDetailComponent implements OnInit {
       return;
     }
     this._result = resultModel;
+    this._result.pairs
+      .sort((p1, p2) => {
+      if (p1.factorName < p2.factorName) return -1;
+      if (p1.factorName > p2.factorName) return 1;
+    });
     this.total = 0;
     for (let pair of resultModel.pairs) {
       switch (pair.estimation) {

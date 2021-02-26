@@ -10,12 +10,19 @@
        class="list-group-item clearfix"
        [routerLink]="['/emps-with-res-by-manager', manager.id, emp.id]"
        routerLinkActive="active">
-      <div class="pull-left">
-        <p class="list-group-item-heading">{{emp.firstName + ' ' + emp.lastName + ' - ' + emp.empRole}}</p>
+      <div class="text-center">
+        <p class="list-group-item-heading">
+          {{emp.firstName + ' ' + emp.lastName}}
+        </p>
       </div>
     </a>
   </div>
   <div class="col-md-6">
     <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-error-notification *ngIf="resolverFailed"></app-error-notification>
   </div>
 </div>

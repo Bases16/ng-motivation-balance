@@ -14,7 +14,7 @@ export class FactorsResolver implements Resolve<string[]> {
       .pipe(
         catchError(err => {
           console.log(err);
-          return of(null);
+          return of(undefined);
         })
       );
   }

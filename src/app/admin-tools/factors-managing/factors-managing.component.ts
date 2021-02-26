@@ -11,12 +11,17 @@ import {FactorDto} from '../../models-container.model';
 export class FactorsManagingComponent implements OnInit {
   @ViewChild('ngForm') addButtonForm: NgForm;
   private _allFactors: FactorDto[] = [];
+  error: string;
 
   constructor(private factorsService: FactorsService) {}
 
   ngOnInit() {
     this.factorsService.getAllFactors()
       .subscribe(factors => this.allFactors = factors);
+  }
+
+  get allFactors(): FactorDto[] {
+    return this._allFactors;
   }
 
   set allFactors(factors: FactorDto[]) {
@@ -30,20 +35,31 @@ export class FactorsManagingComponent implements OnInit {
     });
   }
 
-  get allFactors(): FactorDto[] {
-    return this._allFactors;
-  }
-
   onSubmit() {
+    this.error = null;
     const newFactorName = this.addButtonForm.value.newFactorName;
+
+    let factor: FactorDto = this._allFactors
+      .find(factor => newFactorName.toLowerCase() == factor.name.toLowerCase());
+    if (factor) {
+      this.addButtonForm.reset();
+      if (factor.status === 'REMOVED') {
+        alert('FACTOR WITH SUCH NAME ALREADY EXISTS BUT IS NOT ACTIVE. CLICK "ACTIVATE" ON IT!')
+      }
+      if (factor.status === 'ACTIVE') {
+        alert('FACTOR WITH SUCH NAME ALREADY EXISTS AND WORKS FINE!')
+      }
+      return;
+    }
+
     this.factorsService.createNewFactor(newFactorName)
       .subscribe(
         () => {
+          this.addButtonForm.reset();
           this._allFactors.unshift({name: newFactorName, status: 'ACTIVE'});
         },
-        error => {
-          console.log(error);
-        });
+        (errorMessage) => this.error = errorMessage
+      );
   }
 
   onChangeStatusClick(factorName: string) {
@@ -59,6 +75,5 @@ export class FactorsManagingComponent implements OnInit {
           console.log(error);
         });
   }
-
 
 }

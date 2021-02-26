@@ -9,9 +9,10 @@ import {EmployeeDto} from '../../models-container.model';
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent implements OnInit {
-  employees: EmployeeDto[];
+  _employees: EmployeeDto[];
   pathPart: string = '';
   manager: EmployeeDto;
+  resolverFailed = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private employeesService: EmployeesService) {}
@@ -19,6 +20,10 @@ export class EmployeesListComponent implements OnInit {
   ngOnInit() {
     this.route.data
       .subscribe((data: Data) => {
+        if (data['employees'] === undefined) {
+          this.resolverFailed = true;
+          return;
+        }
         this.employees = data['employees'];
         this.pathPart = this.router.url.includes('employees-by-manager')
           ? 'employees-by-manager' : 'employees-without-manager';
@@ -30,5 +35,17 @@ export class EmployeesListComponent implements OnInit {
           id: '', managerId: '', firstName: '', lastName: '', empRole: ''
         }
       });
+  }
+
+  get employees() {
+    return this._employees;
+  }
+
+  set employees(employees: EmployeeDto[]) {
+    this._employees = employees.sort((e1, e2) => {
+      if (e1.lastName < e2.lastName) return -1;
+      if (e1.lastName > e2.lastName) return 1;
+      else return 0;
+    });
   }
 }

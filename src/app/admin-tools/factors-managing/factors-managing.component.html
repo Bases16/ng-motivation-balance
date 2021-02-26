@@ -20,6 +20,11 @@
     </form>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+  </div>
+</div>
 <br>
 <div class="row">
   <div class="col-md-12">

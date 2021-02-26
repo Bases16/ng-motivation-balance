@@ -25,6 +25,11 @@
         [disabled]="!ngForm.valid">Send
       </button>
     </form>
+    <br>
+    <div class="alert alert-success" *ngIf="successSend">
+      <p>Result was successfully sent!</p>
+    </div>
+    <app-error-notification *ngIf = error [error]="error"></app-error-notification>
+    <app-error-notification *ngIf = resolverFailed></app-error-notification>
   </div>
-
 </div>

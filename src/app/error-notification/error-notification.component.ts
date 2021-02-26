@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./error-notification.component.css']
 })
 export class ErrorNotificationComponent implements OnInit {
-  @Input() error: string;
+  @Input() error: string = 'An unknown error occurred! Please try later.';
 
   constructor() { }
 

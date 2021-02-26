@@ -27,5 +27,5 @@ export class UtilService {
     }
     return throwError(errorMessage);
   }
-  
+
 }

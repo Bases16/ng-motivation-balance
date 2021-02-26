@@ -53,7 +53,7 @@ const appRoutes: Routes = [
   {
     path: 'admin-tools/employees-by-manager/:managerId', component: EmployeesListComponent,
     canActivate: [AdminPagesAuthGuard],
-    resolve: {employees: EmployeesByManagerResolver},
+    resolve: {employees: EmployeesByManagerResolver, managers: ManagersResolver},
     children: [
       {
         path: ':id', component: EmployeeOptionsComponent,
@@ -80,11 +80,11 @@ const appRoutes: Routes = [
       }
     ]
   },
-
   {
     path: 'emps-with-res-by-manager/:managerId', component: EmployeesWithResultsByManager,
     canActivate: [ManagerAdminPagesAuthGuard],
-    resolve: {employees: EmployeesByManagerResolver, results: ResultsByManagerResolver},
+    resolve: {employees: EmployeesByManagerResolver, results: ResultsByManagerResolver,
+              managers: ManagersResolver},
     children: [
       {path: ':id', component: ResultDetailComponent}
     ]

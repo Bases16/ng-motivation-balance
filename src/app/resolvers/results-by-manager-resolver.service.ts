@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {EmployeesService} from '../employees.service';
 import {Observable, of} from 'rxjs';
 import {catchError, concatMap, take} from 'rxjs/operators';
 import {AuthService} from '../auth/auth.service';
@@ -26,7 +25,7 @@ export class ResultsByManagerResolver implements Resolve<ResultModel[]> {
       }),
       catchError(err => {
         console.log(err);
-        return of(null);
+        return of(undefined);
       })
     );
   }

@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EmployeeDto, EmployeesService} from '../../employees.service';
+import {EmployeesService} from '../../employees.service';
 import {NgForm} from '@angular/forms';
+import {EmployeeDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-search-employees',

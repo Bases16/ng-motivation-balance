@@ -1,17 +1,29 @@
 import {Injectable} from '@angular/core';
-import {ResultModel} from './results/result.model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {ResultDto} from './auth/models-container.model';
+import {ResultDto, ResultModel} from './models-container.model';
+import {UtilService} from './util.service';
 
 
 @Injectable({providedIn: 'root'})
 export class ResultsService {
   userResults: ResultModel[]
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
+
+  getResultByResultOrder(order: number): ResultModel {
+    return this.userResults[order];
+  }
+
+  getResultByEmpId(empId: string): ResultModel {
+    return this.userResults.find(result => result.empId == empId);
+  }
+
+  saveResult(resultDto: ResultDto): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/results/save', resultDto)
+      .pipe(catchError(UtilService.handleError));
   }
 
   getResultsByEmpId(empId: number): Observable<ResultModel[]> {
@@ -22,7 +34,8 @@ export class ResultsService {
             return new ResultModel(resResp.empId, new Date(resResp.passDatetime),
               resResp.estimationPairs);
           });
-        })
+        }),
+        catchError(UtilService.handleError)
       );
   }
 
@@ -35,20 +48,9 @@ export class ResultsService {
             return new ResultModel(resResp.empId, new Date(resResp.passDatetime),
               resResp.estimationPairs);
           });
-        })
+        }),
+        catchError(UtilService.handleError)
       );
-  }
-
-  getResultByResultOrder(order: number): ResultModel {
-    return this.userResults[order];
-  }
-
-  getResultByEmpId(empId: string): ResultModel {
-    return this.userResults.find(result => result.empId == empId);
-  }
-
-  saveResult(resultDto: ResultDto): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/results/save', resultDto)
   }
 
 }

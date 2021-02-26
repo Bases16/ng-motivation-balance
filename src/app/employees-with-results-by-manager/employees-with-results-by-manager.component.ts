@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Data, Params} from '@angular/router';
-import {EmployeeDto, EmployeesService} from '../employees.service';
-import {ResultModel} from '../results/result.model';
+import {EmployeesService} from '../employees.service';
 import {ResultsService} from '../results.service';
+import {EmployeeDto, ResultModel} from '../models-container.model';
 
 @Component({
   selector: 'app-employee-list',

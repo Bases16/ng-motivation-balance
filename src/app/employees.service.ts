@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {Observable, Subject} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {EmployeeDto} from './auth/models-container.model';
+import {UtilService} from './util.service';
+import {EmployeeDto} from './models-container.model';
 
 
 @Injectable({providedIn: 'root'})
@@ -14,30 +15,33 @@ export class EmployeesService {
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
+  getEmployeeById(id: string) {
+    return this.loadedEmployees.find(val => val.id == id);
+  }
+
   getEmployeesByManagerId(managerId: number): Observable<EmployeeDto[]> {
     return this.http
       .get<EmployeeDto[]>(environment.serverHost + '/rest/emps/by-manager/' + managerId)
       .pipe(
-        tap(newEmps => this.updateLoadedEmpsList(newEmps))
+        tap(newEmps => this.updateLoadedEmpsList(newEmps)),
+        catchError(UtilService.handleError)
       );
   }
 
   getEmployeesWithoutManager(): Observable<EmployeeDto[]> {
     return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/emps-without-managers/')
       .pipe(
-        tap(newEmps => this.updateLoadedEmpsList(newEmps))
+        tap(newEmps => this.updateLoadedEmpsList(newEmps)),
+        catchError(UtilService.handleError)
       );
   }
 
   getAllManagers(): Observable<EmployeeDto[]> {
     return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/managers')
       .pipe(
-        tap(newEmps => this.updateLoadedEmpsList(newEmps))
+        tap(newEmps => this.updateLoadedEmpsList(newEmps)),
+        catchError(UtilService.handleError)
       );
-  }
-
-  getEmployeeById(id: string) {
-    return this.loadedEmployees.find(val => val.id == id);
   }
 
   searchEmployee(fir: string, sec: string): Observable<EmployeeDto[]> {
@@ -50,7 +54,28 @@ export class EmployeesService {
     return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/search-employee',
       {
         params: params
-      });
+      })
+      .pipe(catchError(UtilService.handleError));;
+  }
+
+  removeEmployee(empId: string): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/remove', empId)
+      .pipe(catchError(UtilService.handleError));
+  }
+
+  changeRole(empId: string): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/change-role', empId)
+      .pipe(catchError(UtilService.handleError));
+  }
+
+  releaseFromManager(empId: string): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/release-from-manager', empId)
+      .pipe(catchError(UtilService.handleError));
+  }
+
+  saveAssignation(empId, managerId): Observable<any> {
+    return this.http.post(environment.serverHost + '/rest/emps/assign-manager/' + managerId, empId)
+      .pipe(catchError(UtilService.handleError));
   }
 
   private updateLoadedEmpsList(emps: EmployeeDto[]) {
@@ -62,22 +87,6 @@ export class EmployeesService {
         this.loadedEmployees[emps.indexOf(oldEmp)] = emp;
       }
     }
-  }
-
-  removeEmployee(empId: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/remove', empId);
-  }
-
-  changeRole(empId: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/change-role', empId);
-  }
-
-  releaseFromManager(empId: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/release-from-manager', empId);
-  }
-
-  saveAssignation(empId, managerId): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/assign-manager/' + managerId, empId);
   }
 
 }

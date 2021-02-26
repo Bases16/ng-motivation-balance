@@ -1,7 +1,7 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {EmployeeDto, EmployeesService} from '../../employees.service';
+import {EmployeesService} from '../../employees.service';
 import {ActivatedRoute, Data} from '@angular/router';
-import {Subject} from 'rxjs';
+import {EmployeeDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-managers-list',

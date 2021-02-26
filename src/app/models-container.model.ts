@@ -1,18 +1,10 @@
-export interface AuthResponseDto {
-  empId: string;
-  email: string;
-  token: string;
+export class ResultModel {
+
+  constructor(public empId: string,
+              public passDatetime: Date,
+              public pairs: {factorName: string, estimation: string}[]) {
+  }
 }
-
-
-export interface UserData {
-  empId: number,
-  email: string;
-  role: string;
-  _token: string;
-  _tokenExpirationDate: string;
-}
-
 
 export class User {
   constructor(public empId: number,
@@ -27,6 +19,36 @@ export class User {
     }
     return this._token;
   }
+}
+
+
+export class FactorStat {
+  factorName: string;
+  likePercent: number;
+  dislikePercent: number;
+  neutralPercent: number;
+}
+
+
+export class Factor {
+  name: string;
+  estimationsSize: number;
+}
+
+
+export interface AuthResponseDto {
+  empId: string;
+  email: string;
+  token: string;
+}
+
+
+export interface UserData {
+  empId: number,
+  email: string;
+  role: string;
+  _token: string;
+  _tokenExpirationDate: string;
 }
 
 

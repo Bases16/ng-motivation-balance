@@ -5,7 +5,7 @@ import {BehaviorSubject, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {UtilService} from '../util.service';
-import {AuthResponseDto, User, UserData} from './models-container.model';
+import {AuthResponseDto, User, UserData} from '../models-container.model';
 
 
 @Injectable({providedIn: 'root'})

@@ -1,17 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {EstimationPairDto, StatsService} from '../../stats.service';
+import {StatsService} from '../../stats.service';
+import {EstimationPairDto, Factor, FactorStat} from '../../models-container.model';
 
-class FactorStat {
-  factorName: string;
-  likePercent: number;
-  dislikePercent: number;
-  neutralPercent: number;
-}
-
-class Factor {
-  name: string;
-  estimationsSize: number;
-}
 
 @Component({
   selector: 'app-stats',

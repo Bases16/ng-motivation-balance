@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FactorDto, FactorsService} from '../../factors.service';
+import {FactorsService} from '../../factors.service';
 import {NgForm} from '@angular/forms';
+import {FactorDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-factors-managing',

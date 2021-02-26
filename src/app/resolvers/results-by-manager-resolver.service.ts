@@ -4,8 +4,8 @@ import {EmployeesService} from '../employees.service';
 import {Observable, of} from 'rxjs';
 import {catchError, concatMap, take} from 'rxjs/operators';
 import {AuthService} from '../auth/auth.service';
-import {ResultModel} from '../results/result.model';
 import {ResultsService} from '../results.service';
+import {ResultModel} from '../models-container.model';
 
 
 @Injectable({providedIn: 'root'})

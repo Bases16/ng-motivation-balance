@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {ResultModel} from '../result.model';
 import {ResultsService} from '../../results.service';
+import {ResultModel} from '../../models-container.model';
 
 @Component({
   selector: 'app-result',

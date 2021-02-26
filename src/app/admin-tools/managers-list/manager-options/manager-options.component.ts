@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {EmployeeDto, EmployeesService} from '../../../employees.service';
+import {EmployeesService} from '../../../employees.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {UtilService} from '../../../util.service';
+import {EmployeeDto} from '../../../models-container.model';
 
 @Component({
   selector: 'app-manager-options',

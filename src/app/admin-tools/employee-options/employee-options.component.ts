@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {EmployeeDto, EmployeesService} from '../../employees.service';
+import {EmployeesService} from '../../employees.service';
 import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
 import {UtilService} from '../../util.service';
 import {Subscription} from 'rxjs';
+import {EmployeeDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-employee-options',

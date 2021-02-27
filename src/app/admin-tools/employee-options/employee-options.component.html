@@ -2,30 +2,24 @@
   <div class="col-md-12">
     <fieldset>
       <legend>{{employee.firstName + ' ' + employee.lastName}}</legend>
-      <a *ngIf="pathPart === 'employees-by-manager'" class="btn btn-link" (click)="onReleaseFromManager()">
-          <span class="list-group-item list-group-item-warning">
-            release from current manager
-          </span>
-      </a><br>
-      <a class="btn btn-link" (click)="onChangeRole()">
-          <span class="list-group-item list-group-item-warning">
-            make them manager
-          </span>
-      </a><br>
-      <a class="btn btn-link" (click)="onRemove()">
-          <span class="list-group-item list-group-item-danger">
-            remove specialist from base
-          </span>
-      </a><br>
-      <a class="btn btn-link">
-          <span class="list-group-item list-group-item-warning"
-                routerLink="assign-new-manager"
-                routerLinkActive="active">
-            assign new manager
-          </span>
-      </a><button *ngIf="assignMode"
-                  [disabled]="!newManagerId"
-                  class="btn btn-success" (click)="onSaveAssignation()">save</button>
+      <button *ngIf="pathPart === 'employees-by-manager'"
+              class="btn btn-block btn-warning text-center" (click)="onReleaseFromManager()">
+        RELEASE FROM CURRENT MANAGER
+      </button>
+      <button class="btn btn-block btn-warning text-center" (click)="onChangeRole()">
+        MAKE THEM MANAGER
+      </button>
+      <button class="btn btn-block btn-danger text-center" (click)="onRemove()">
+        REMOVE USER
+      </button>
+
+      <button class="btn btn-block btn-info text-center" routerLink="assign-new-manager">
+        ASSIGN NEW MANAGER
+      </button>
+      <button *ngIf="assignMode" [disabled]="!newManagerId"
+              class="btn btn-block btn-success" (click)="onSaveAssignation()">
+        SAVE
+      </button>
     </fieldset>
   </div>
 </div>

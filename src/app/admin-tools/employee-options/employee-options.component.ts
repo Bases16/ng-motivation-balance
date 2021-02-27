@@ -20,7 +20,8 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
   error: string;
 
   constructor(private employeesService: EmployeesService,
-              private route: ActivatedRoute, private router: Router) {}
+              private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -50,17 +51,20 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
   }
 
   onChangeRole() {
-    this.employeesService.changeRole(this.employee.id)
-      .subscribe(
-        () => UtilService.redirectTo(
-          '/admin-tools/' + this.pathPart + '/' + this.currentManagerId, this.router),
-        error => this.error = error
-      );
+    if (confirm('ARE YOU SURE TO MAKE ' + this.employee.firstName
+                                  + ' ' + this.employee.lastName + ' MANAGER ?')) {
+      this.employeesService.changeRole(this.employee.id)
+        .subscribe(
+          () => UtilService.redirectTo(
+            '/admin-tools/' + this.pathPart + '/' + this.currentManagerId, this.router),
+          error => this.error = error
+        );
+    }
   }
 
   onRemove() {
     if (confirm('ARE YOU SURE TO DELETE ' + this.employee.firstName
-         + ' ' + this.employee.lastName + ' FROM BASE')) {
+      + ' ' + this.employee.lastName + ' FROM BASE')) {
       this.employeesService.removeEmployee(this.employee.id)
         .subscribe(
           () => UtilService.redirectTo(
@@ -71,12 +75,15 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
   }
 
   onReleaseFromManager() {
-    this.employeesService.releaseFromManager(this.employee.id)
-      .subscribe(
-        () => UtilService.redirectTo(
-          '/admin-tools/employees-by-manager/' + this.currentManagerId, this.router),
-        error => this.error = error
-      );
+    if (confirm('ARE YOU SURE TO RELEASE ' + this.employee.firstName
+                       + ' ' + this.employee.lastName + ' FROM CURRENT MANAGER ?')) {
+      this.employeesService.releaseFromManager(this.employee.id)
+        .subscribe(
+          () => UtilService.redirectTo(
+            '/admin-tools/employees-by-manager/' + this.currentManagerId, this.router),
+          error => this.error = error
+        );
+    }
   }
 
   onSaveAssignation() {

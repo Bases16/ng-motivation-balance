@@ -27,7 +27,7 @@ export class ManagerOptionsComponent implements OnInit {
   }
 
   onRemove() {
-    if (confirm('ARE YOU SURE TO DELETE ' + this.manager.firstName
+    if (confirm('ARE YOU SURE TO REMOVE ' + this.manager.firstName
       + ' ' + this.manager.lastName + ' FROM BASE?')) {
       this.employeesService.removeEmployee(this.manager.id)
         .subscribe(

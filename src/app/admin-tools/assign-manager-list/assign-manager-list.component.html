@@ -5,8 +5,8 @@
        style="cursor: pointer"
        class="list-group-item clearfix">
       <div class="text-center">
-        <p class="list-group-item-heading">{{emp.firstName + ' ' + emp.lastName}}
-          <button style="margin-left: 20px" class="btn btn-success"
+        <p class="list-group-item-heading text-bit-bigger">{{emp.firstName + ' ' + emp.lastName}}
+          <button class="btn btn-success pull-right"
                   (click)="onNewManagerChosen($event, emp.id)">choose</button>
         </p>
       </div>

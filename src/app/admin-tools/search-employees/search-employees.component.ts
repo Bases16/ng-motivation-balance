@@ -11,6 +11,7 @@ import {EmployeeDto} from '../../models-container.model';
 export class SearchEmployeesComponent implements OnInit {
   @ViewChild('ngForm') searchEmpsForm: NgForm;
   foundEmployees: EmployeeDto[];
+  error: string;
 
   constructor(private employeeService: EmployeesService) {}
 
@@ -18,7 +19,7 @@ export class SearchEmployeesComponent implements OnInit {
     this.employeeService.getAllManagers()
       .subscribe(
         () => {},
-        error => console.log(error)
+        error => this.error = error
       )
   }
 
@@ -29,10 +30,9 @@ export class SearchEmployeesComponent implements OnInit {
     this.employeeService.searchEmployee(strings[0], strings[1])
       .subscribe(
         employees => {
-          console.log(employees);
           this.foundEmployees = employees;
         },
-        error => console.log(error)
+        error => this.error = error
       );
   }
 

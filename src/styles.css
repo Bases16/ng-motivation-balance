@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+.text-large {
+  font-size: 150%;
+}
+
+.text-bit-bigger {
+  font-size: 110%;
+}
+
+.text-bigger {
+  font-size: 125%;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.font-bold {
+  font-weight: bold;
+}

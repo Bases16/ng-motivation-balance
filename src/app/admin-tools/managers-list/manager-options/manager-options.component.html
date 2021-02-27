@@ -2,27 +2,20 @@
   <div class="col-md-12">
     <fieldset>
       <legend>{{manager.firstName + ' ' + manager.lastName}}</legend>
-      <a class="btn btn-link" [routerLink]="['/emps-with-res-by-manager', manager.id]">
-          <span class="list-group-item list-group-item-info">
-            see manager's employees list and their relevant results
-          </span>
-      </a><br>
-      <a class="btn btn-link" [routerLink]="['/admin-tools', 'employees-by-manager', manager.id]">
-          <span class="list-group-item list-group-item-info">
-            manage their employees
-          </span>
-      </a><br>
-      <a class="btn btn-link" (click)="onChangeRole()">
-          <span class="list-group-item list-group-item-warning">
-            make them specialist
-          </span>
-      </a><br>
-      <a class="btn btn-link" (click)="onRemove()">
-          <span class="list-group-item list-group-item-danger">
-            remove manager from base
-          </span>
-      </a><br>
-
+      <button class="btn btn-block btn-info text-center"
+              [routerLink]="['/emps-with-res-by-manager', manager.id]">
+        SEE EMPLOYEES' RESULTS
+      </button>
+      <button class="btn btn-block btn-info text-center"
+              [routerLink]="['/admin-tools', 'employees-by-manager', manager.id]">
+        MANAGE THEIR EMPLOYEES
+      </button>
+      <button class="btn btn-block btn-warning text-center" (click)="onChangeRole()">
+        MAKE THEM SPECIALIST
+      </button>
+      <button class="btn btn-block btn-danger text-center" (click)="onRemove()">
+        REMOVE USER
+      </button>
     </fieldset>
   </div>
 </div>

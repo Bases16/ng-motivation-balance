@@ -5,7 +5,7 @@
     </div>
     <div class="collapse navbar-collapse">
 
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav font-bold">
         <li routerLinkActive="active" *ngIf="isAuthenticated && !(userRole === 'ADMIN')">
           <a routerLink="/new-survey">Take a Survey</a>
         </li>
@@ -23,7 +23,7 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right font-bold">
         <li *ngIf="isAuthenticated">
            <a style="cursor: pointer" (click)="onLogout()">Logout</a>
         </li>

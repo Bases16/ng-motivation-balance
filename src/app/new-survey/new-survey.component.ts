@@ -39,23 +39,23 @@ export class NewSurveyComponent implements OnInit {
   }
 
   onSubmit() {
-    this.successSend = false;
+    if (confirm("SURE THAT YOU'RE READY TO SEND THE SURVEY?")) {
+      this.successSend = false;
+      let estimationPairs: { factorName: string, estimation: string }[] = [];
 
-    let estimationPairs: { factorName: string, estimation: string }[] = [];
-
-    this.activeFactors.forEach(factor => {
-      estimationPairs.push(
-        {factorName: factor, estimation: this.surveyForm.value[factor]}
+      this.activeFactors.forEach(factor => {
+        estimationPairs.push(
+          {factorName: factor, estimation: this.surveyForm.value[factor]}
+        );
+      });
+      this.resultsService.saveResult({
+        empId: '' + this.empId, estimationPairs: estimationPairs
+      }).subscribe(
+        () => this.successSend = true,
+        error => this.error = error
       );
-    });
-    this.resultsService.saveResult({
-      empId: '' + this.empId, estimationPairs: estimationPairs
-    }).subscribe(
-      () => this.successSend = true,
-      error => this.error = error
-    );
-
-    this.surveyForm.reset();
+      this.surveyForm.reset();
+    }
   }
 
 }

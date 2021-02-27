@@ -17,7 +17,10 @@ export class FactorsManagingComponent implements OnInit {
 
   ngOnInit() {
     this.factorsService.getAllFactors()
-      .subscribe(factors => this.allFactors = factors);
+      .subscribe(
+        factors => this.allFactors = factors,
+        error => this.error = error
+      );
   }
 
   get allFactors(): FactorDto[] {
@@ -44,10 +47,10 @@ export class FactorsManagingComponent implements OnInit {
     if (factor) {
       this.addButtonForm.reset();
       if (factor.status === 'REMOVED') {
-        alert('FACTOR WITH SUCH NAME ALREADY EXISTS BUT IS NOT ACTIVE. CLICK "ACTIVATE" ON IT!')
+        alert('FACTOR WITH SUCH NAME ALREADY EXISTS BUT IS NOT ACTIVE. CLICK "ACTIVATE" ON IT!');
       }
       if (factor.status === 'ACTIVE') {
-        alert('FACTOR WITH SUCH NAME ALREADY EXISTS AND WORKS FINE!')
+        alert('FACTOR WITH SUCH NAME ALREADY EXISTS AND WORKS FINE!');
       }
       return;
     }

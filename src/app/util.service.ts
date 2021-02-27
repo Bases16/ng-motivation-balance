@@ -12,7 +12,7 @@ export class UtilService {
   }
 
   public static handleError(errorRes: HttpErrorResponse) {
-    console.log(errorRes);
+    // console.log(errorRes);
     let errorMessage = 'An unknown error occurred! Please try later.';
     if (!errorRes.error) {
       return throwError(errorMessage);

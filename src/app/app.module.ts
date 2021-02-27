@@ -34,7 +34,7 @@ import {EmployeeOptionsComponent} from './admin-tools/employee-options/employee-
 import {EmployeesWithoutManagerResolver} from './resolvers/employees-without-managers-resolver.service';
 import {AssignManagerListComponent} from './admin-tools/assign-manager-list/assign-manager-list.component';
 import {SearchEmployeesComponent} from './admin-tools/search-employees/search-employees.component';
-import { ErrorNotificationComponent } from './error-notification/error-notification.component';
+import {ErrorNotificationComponent} from './error-notification/error-notification.component';
 
 const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent, canActivate: [AuthPageGuard]},
@@ -138,5 +138,4 @@ const appRoutes: Routes = [
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

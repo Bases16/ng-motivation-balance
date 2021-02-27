@@ -7,8 +7,7 @@ import {take, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit {
   isLoginMode = true;

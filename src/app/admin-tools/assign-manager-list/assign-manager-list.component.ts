@@ -5,8 +5,7 @@ import {EmployeeDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-managers-list',
-  templateUrl: './assign-manager-list.component.html',
-  styleUrls: ['./assign-manager-list.component.css']
+  templateUrl: './assign-manager-list.component.html'
 })
 export class AssignManagerListComponent implements OnInit {
   managers: EmployeeDto[] = [];

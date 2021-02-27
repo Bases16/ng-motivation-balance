@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {Observable, Subject} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {ActivatedRoute, Router} from '@angular/router';
 import {UtilService} from './util.service';
 import {EmployeeDto} from './models-container.model';
 
@@ -13,7 +12,7 @@ export class EmployeesService {
   loadedEmployees: EmployeeDto[] = [];
   newManagerWasChosen = new Subject<number>();
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient) {}
 
   getEmployeeById(id: string) {
     return this.loadedEmployees.find(val => val.id == id);
@@ -55,7 +54,7 @@ export class EmployeesService {
       {
         params: params
       })
-      .pipe(catchError(UtilService.handleError));;
+      .pipe(catchError(UtilService.handleError));
   }
 
   removeEmployee(empId: string): Observable<any> {

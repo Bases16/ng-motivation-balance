@@ -5,11 +5,6 @@ export class ResultModel {
   }
 }
 
-export interface ResultsResolved {
-  results: ResultModel[];
-  error?: any;
-}
-
 
 export class User {
   constructor(public empId: number,
@@ -83,5 +78,4 @@ export interface EmployeeDto {
   lastName: string;
   empRole: string;
 }
-
 

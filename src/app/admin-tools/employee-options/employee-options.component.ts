@@ -7,8 +7,7 @@ import {EmployeeDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-employee-options',
-  templateUrl: './employee-options.component.html',
-  styleUrls: ['./employee-options.component.css']
+  templateUrl: './employee-options.component.html'
 })
 export class EmployeeOptionsComponent implements OnInit, OnDestroy {
   employee: EmployeeDto;

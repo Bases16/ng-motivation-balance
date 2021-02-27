@@ -7,8 +7,7 @@ import {take, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-survey',
-  templateUrl: './new-survey.component.html',
-  styleUrls: ['./new-survey.component.css']
+  templateUrl: './new-survey.component.html'
 })
 export class NewSurveyComponent implements OnInit {
   @ViewChild('ngForm') surveyForm: NgForm;

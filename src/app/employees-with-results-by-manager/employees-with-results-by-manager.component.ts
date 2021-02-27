@@ -6,8 +6,7 @@ import {EmployeeDto, ResultModel} from '../models-container.model';
 
 @Component({
   selector: 'app-employee-list',
-  templateUrl: './employees-with-results-by-manager.component.html',
-  styleUrls: ['./employees-with-results-by-manager.component.css']
+  templateUrl: './employees-with-results-by-manager.component.html'
 })
 export class EmployeesWithResultsByManager implements OnInit {
   private _employees: EmployeeDto[];

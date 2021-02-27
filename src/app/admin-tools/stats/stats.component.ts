@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {StatsService} from '../../stats.service';
 import {EstimationPairDto, Factor, FactorStat} from '../../models-container.model';
 
-
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',

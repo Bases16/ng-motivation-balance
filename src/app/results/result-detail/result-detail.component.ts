@@ -5,8 +5,7 @@ import {ResultModel} from '../../models-container.model';
 
 @Component({
   selector: 'app-result',
-  templateUrl: './result-detail.component.html',
-  styleUrls: ['./result-detail.component.css']
+  templateUrl: './result-detail.component.html'
 })
 export class ResultDetailComponent implements OnInit {
   private _result: ResultModel;

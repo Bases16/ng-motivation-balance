@@ -5,8 +5,7 @@ import {FactorDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-factors-managing',
-  templateUrl: './factors-managing.component.html',
-  styleUrls: ['./factors-managing.component.css']
+  templateUrl: './factors-managing.component.html'
 })
 export class FactorsManagingComponent implements OnInit {
   @ViewChild('ngForm') addButtonForm: NgForm;

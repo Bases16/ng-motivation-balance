@@ -3,8 +3,7 @@ import {ResultsService} from '../../results.service';
 
 @Component({
   selector: 'app-results-start',
-  templateUrl: './results-start.component.html',
-  styleUrls: ['./results-start.component.css']
+  templateUrl: './results-start.component.html'
 })
 export class ResultsStartComponent implements OnInit {
   hasResults: boolean;

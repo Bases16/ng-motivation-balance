@@ -6,8 +6,7 @@ import {EmployeeDto} from '../../../models-container.model';
 
 @Component({
   selector: 'app-manager-options',
-  templateUrl: './manager-options.component.html',
-  styleUrls: ['./manager-options.component.css']
+  templateUrl: './manager-options.component.html'
 })
 export class ManagerOptionsComponent implements OnInit {
   manager: EmployeeDto;

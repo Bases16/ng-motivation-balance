@@ -5,8 +5,7 @@ import {EmployeeDto} from '../../models-container.model';
 
 @Component({
   selector: 'app-search-employees',
-  templateUrl: './search-employees.component.html',
-  styleUrls: ['./search-employees.component.css']
+  templateUrl: './search-employees.component.html'
 })
 export class SearchEmployeesComponent implements OnInit {
   @ViewChild('ngForm') searchEmpsForm: NgForm;

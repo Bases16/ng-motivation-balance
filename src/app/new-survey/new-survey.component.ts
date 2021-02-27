@@ -22,14 +22,14 @@ export class NewSurveyComponent implements OnInit {
               private authService: AuthService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.data
       .subscribe((data: Data) => {
-        if (data['activeFactors'] === undefined) {
+        if (data.activeFactors === undefined) {
           this.resolverFailed = true;
           return;
         }
-        this.activeFactors = data['activeFactors'];
+        this.activeFactors = data.activeFactors;
       });
     this.authService.user.pipe(
       take(1),
@@ -37,10 +37,10 @@ export class NewSurveyComponent implements OnInit {
     ).subscribe();
   }
 
-  onSubmit() {
-    if (confirm("SURE THAT YOU'RE READY TO SEND THE SURVEY?")) {
+  onSubmit(): void {
+    if (confirm('SURE THAT YOU\'RE READY TO SEND THE SURVEY?')) {
       this.successSend = false;
-      let estimationPairs: { factorName: string, estimation: string }[] = [];
+      const estimationPairs: { factorName: string, estimation: string }[] = [];
 
       this.activeFactors.forEach(factor => {
         estimationPairs.push(
@@ -48,7 +48,7 @@ export class NewSurveyComponent implements OnInit {
         );
       });
       this.resultsService.saveResult({
-        empId: '' + this.empId, estimationPairs: estimationPairs
+        empId: '' + this.empId, estimationPairs
       }).subscribe(
         () => this.successSend = true,
         error => this.error = error

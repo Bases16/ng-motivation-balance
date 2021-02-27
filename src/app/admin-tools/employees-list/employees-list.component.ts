@@ -9,42 +9,42 @@ import {EmployeeDto} from '../../models-container.model';
 })
 export class EmployeesListComponent implements OnInit {
   _employees: EmployeeDto[];
-  pathPart: string = '';
+  pathPart = '';
   manager: EmployeeDto;
   resolverFailed = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private employeesService: EmployeesService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.data
       .subscribe((data: Data) => {
-        if (data['employees'] === undefined) {
+        if (data.employees === undefined) {
           this.resolverFailed = true;
           return;
         }
-        this.employees = data['employees'];
+        this.employees = data.employees;
         this.pathPart = this.router.url.includes('employees-by-manager')
           ? 'employees-by-manager' : 'employees-without-manager';
       });
     this.route.params.subscribe(
       (params: Params) => {
-        let manager = this.employeesService.getEmployeeById(params['managerId']);
+        const manager = this.employeesService.getEmployeeById(params.managerId);
         this.manager = manager ? manager : {
           id: '', managerId: '', firstName: '', lastName: '', empRole: ''
-        }
+        };
       });
   }
 
-  get employees() {
+  get employees(): EmployeeDto[] {
     return this._employees;
   }
 
   set employees(employees: EmployeeDto[]) {
     this._employees = employees.sort((e1, e2) => {
-      if (e1.lastName < e2.lastName) return -1;
-      if (e1.lastName > e2.lastName) return 1;
-      else return 0;
+      if (e1.lastName < e2.lastName) { return -1; }
+      if (e1.lastName > e2.lastName) { return 1; }
+      else { return 0; }
     });
   }
 }

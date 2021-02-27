@@ -15,19 +15,19 @@ export class AssignManagerListComponent implements OnInit {
               private route: ActivatedRoute,
               private renderer: Renderer2) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.data
       .subscribe((data: Data) => {
-        this.managers = data['managers'];
+        this.managers = data.managers;
       });
   }
 
-  onNewManagerChosen(event, empId) {
+  onNewManagerChosen(event, empId): void {
     if (this.chosenManagerElement) {
       this.renderer.removeClass(this.chosenManagerElement, 'list-group-item-info');
     }
     this.chosenManagerElement = event.toElement.offsetParent;
-    this.renderer.addClass(this.chosenManagerElement,'list-group-item-info');
+    this.renderer.addClass(this.chosenManagerElement, 'list-group-item-info');
 
     this.employeesService.newManagerWasChosen.next(+empId);
   }

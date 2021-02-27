@@ -14,10 +14,10 @@ export class ManagersResolver implements Resolve<EmployeeDto[]> {
     return this.authService.user.pipe(
       take(1),
       concatMap(user => {
-        if (user.role == 'MANAGER') return of(null);
+        if (user.role === 'MANAGER') { return of(null); }
         return this.employeesService.getAllManagers();
       }),
-      catchError(err => {
+      catchError(() => {
         return of(undefined);
       })
     );

@@ -9,22 +9,22 @@ import {ResultModel} from '../../models-container.model';
 })
 export class ResultDetailComponent implements OnInit {
   private _result: ResultModel;
-  total: number = 0;
+  total = 0;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private resultsService: ResultsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.router.url.includes('my-results')) {
       this.route.params.subscribe(
         (params: Params) => {
-          this.result = this.resultsService.getResultByResultOrder(+params['id']);
+          this.result = this.resultsService.getResultByResultOrder(+params.id);
         });
     } else {
       this.route.params.subscribe(
         (params: Params) => {
-          this.result = this.resultsService.getResultByEmpId(params['id']);
+          this.result = this.resultsService.getResultByEmpId(params.id);
         });
     }
   }
@@ -37,11 +37,11 @@ export class ResultDetailComponent implements OnInit {
     this._result = resultModel;
     this._result.pairs
       .sort((p1, p2) => {
-      if (p1.factorName < p2.factorName) return -1;
-      if (p1.factorName > p2.factorName) return 1;
+      if (p1.factorName < p2.factorName) { return -1; }
+      if (p1.factorName > p2.factorName) { return 1; }
     });
     this.total = 0;
-    for (let pair of resultModel.pairs) {
+    for (const pair of resultModel.pairs) {
       switch (pair.estimation) {
         case 'LIKE':
           this.total++;
@@ -52,7 +52,7 @@ export class ResultDetailComponent implements OnInit {
     }
   }
 
-  get result() {
+  get result(): ResultModel {
     return this._result;
   }
 

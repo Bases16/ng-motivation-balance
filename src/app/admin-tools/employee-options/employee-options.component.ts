@@ -11,9 +11,9 @@ import {EmployeeDto} from '../../models-container.model';
 })
 export class EmployeeOptionsComponent implements OnInit, OnDestroy {
   employee: EmployeeDto;
-  pathPart: string = '';
-  assignMode: boolean = false;
-  currentManagerId: string = '';
+  pathPart = '';
+  assignMode = false;
+  currentManagerId = '';
   newManagerId: number;
   newManagerSub: Subscription;
   error: string;
@@ -22,17 +22,17 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute, private router: Router) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe(
       (params: Params) => {
-        this.employee = this.employeesService.getEmployeeById(params['id']);
+        this.employee = this.employeesService.getEmployeeById(params.id);
         this.pathPart = this.router.url.includes('employees-by-manager')
           ? 'employees-by-manager' : 'employees-without-manager';
       });
     this.assignMode = this.router.url.includes('assign-new-manager');
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-        let isOnAssign = this.router.url.includes('assign-new-manager');
+        const isOnAssign = this.router.url.includes('assign-new-manager');
         this.assignMode = isOnAssign;
         this.newManagerId = isOnAssign ? this.newManagerId : undefined;
       }
@@ -45,11 +45,11 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.newManagerSub.unsubscribe();
   }
 
-  onChangeRole() {
+  onChangeRole(): void {
     if (confirm('ARE YOU SURE TO MAKE ' + this.employee.firstName
                                   + ' ' + this.employee.lastName + ' MANAGER ?')) {
       this.employeesService.changeRole(this.employee.id)
@@ -61,7 +61,7 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onRemove() {
+  onRemove(): void {
     if (confirm('ARE YOU SURE TO DELETE ' + this.employee.firstName
       + ' ' + this.employee.lastName + ' FROM BASE')) {
       this.employeesService.removeEmployee(this.employee.id)
@@ -73,7 +73,7 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onReleaseFromManager() {
+  onReleaseFromManager(): void {
     if (confirm('ARE YOU SURE TO RELEASE ' + this.employee.firstName
                        + ' ' + this.employee.lastName + ' FROM CURRENT MANAGER ?')) {
       this.employeesService.releaseFromManager(this.employee.id)
@@ -85,7 +85,7 @@ export class EmployeeOptionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSaveAssignation() {
+  onSaveAssignation(): void {
     this.employeesService.saveAssignation(this.employee.id, this.newManagerId)
       .subscribe(
         () => UtilService.redirectTo(

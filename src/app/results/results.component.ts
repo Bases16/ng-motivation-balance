@@ -13,14 +13,14 @@ export class ResultsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private resultsService: ResultsService){ }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.data
       .subscribe( (data: Data) => {
-        if (data['results'] === undefined) {
+        if (data.results === undefined) {
           this.resolverFailed = true;
           return;
         }
-        this.userResults = data['results'];
+        this.userResults = data.results;
         this.resultsService.userResults = this.userResults;
       });
   }
@@ -28,13 +28,13 @@ export class ResultsComponent implements OnInit {
   set userResults(results: ResultModel[]) {
     this._userResults = results;
     this._userResults.sort((r1, r2) => {
-      let dateA = new Date(r1.passDatetime).getTime();
-      let dateB = new Date(r2.passDatetime).getTime();
+      const dateA = new Date(r1.passDatetime).getTime();
+      const dateB = new Date(r2.passDatetime).getTime();
       return dateA < dateB ? 1 : -1;
     });
   }
 
-  get userResults() {
+  get userResults(): ResultModel[] {
     return this._userResults;
   }
 

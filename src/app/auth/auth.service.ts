@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {UtilService} from '../util.service';
@@ -16,27 +16,27 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router) {}
 
-  signUp(email: string, password: string, firstName: string, lastName: string) {
+  signUp(email: string, password: string, firstName: string, lastName: string): Observable<any> {
     return this.http
       .post(
         environment.serverHost + '/rest/auth/register',
         {
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName
+          email,
+          password,
+          firstName,
+          lastName
         }
       )
       .pipe(catchError(UtilService.handleError));
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<AuthResponseDto> {
     return this.http
       .post<AuthResponseDto>(
         environment.serverHost + '/rest/auth/login',
         {
-          email: email,
-          password: password
+          email,
+          password
         }
       )
       .pipe(
@@ -47,10 +47,10 @@ export class AuthService {
       );
   }
 
-  autoLogin() {
+  autoLogin(): void {
     const userData: UserData = JSON.parse(localStorage.getItem('userData'));
 
-    if (!userData) return;
+    if (!userData) { return; }
     const loadedUser = new User(
       userData.empId,
       userData.email,
@@ -67,20 +67,20 @@ export class AuthService {
     }
   }
 
-  logout() {
+  logout(): void {
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
-    if (this.tokenExpirationTimer) clearTimeout(this.tokenExpirationTimer);
+    if (this.tokenExpirationTimer) { clearTimeout(this.tokenExpirationTimer); }
   }
 
-  autoLogout(expirationDuration: number) {
+  autoLogout(expirationDuration: number): void {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration);
   }
 
-  private handleAuthentication(empId:number, email: string, encodedToken: string) {
+  private handleAuthentication(empId: number, email: string, encodedToken: string): void {
 
     const tokenPayloadDecoded = atob(encodedToken.match(/\.(.+)\./)[1]);
 

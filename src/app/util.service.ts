@@ -1,15 +1,15 @@
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
-import {throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 
 export class UtilService {
 
-  public static redirectTo(uri: string, router: Router) {
+  public static redirectTo(uri: string, router: Router): void {
     router.navigateByUrl('/', {skipLocationChange: true})
       .then(() => router.navigate([uri]));
   }
 
-  public static handleError(errorRes: HttpErrorResponse) {
+  public static handleError(errorRes: HttpErrorResponse): Observable<never> {
     // console.log(errorRes);
     let errorMessage = 'An unknown error occurred! Please try later.';
     if (!errorRes.error) {

@@ -13,7 +13,7 @@ export class User {
               private _token: string,
               private _tokenExpirationDate: Date)  {
   }
-  get token() {
+  get token(): string {
     if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
       return null;
     }
@@ -44,7 +44,7 @@ export interface AuthResponseDto {
 
 
 export interface UserData {
-  empId: number,
+  empId: number;
   email: string;
   role: string;
   _token: string;
@@ -55,7 +55,7 @@ export interface UserData {
 export interface ResultDto {
   empId: string;
   passDatetime?: string;
-  estimationPairs: { factorName: string, estimation: string }[]
+  estimationPairs: { factorName: string, estimation: string }[];
 }
 
 
@@ -67,7 +67,7 @@ export interface EstimationPairDto {
 
 export interface FactorDto {
   name: string;
-  status: string
+  status: string;
 }
 
 

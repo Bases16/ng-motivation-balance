@@ -1,3 +1,4 @@
+/* tslint:disable:triple-equals */
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment';
@@ -9,7 +10,7 @@ import {UtilService} from './util.service';
 
 @Injectable({providedIn: 'root'})
 export class ResultsService {
-  userResults: ResultModel[]
+  userResults: ResultModel[];
 
   constructor(private http: HttpClient) {}
 

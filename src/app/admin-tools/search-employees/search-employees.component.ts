@@ -14,17 +14,17 @@ export class SearchEmployeesComponent implements OnInit {
 
   constructor(private employeeService: EmployeesService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.employeeService.getAllManagers()
       .subscribe(
         () => {},
         error => this.error = error
-      )
+      );
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const searchString = this.searchEmpsForm.value.searchQuery;
-    let strings = searchString.trim().split(/\b\s+\b/);
+    const strings = searchString.trim().split(/\b\s+\b/);
 
     this.employeeService.searchEmployee(strings[0], strings[1])
       .subscribe(
@@ -35,7 +35,7 @@ export class SearchEmployeesComponent implements OnInit {
       );
   }
 
-  getManagerNameById(id: string) {
+  getManagerNameById(id: string): string {
     if (id) {
       const manager = this.employeeService.getEmployeeById(id);
       return manager.firstName + ' ' + manager.lastName;

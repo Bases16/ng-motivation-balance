@@ -1,3 +1,4 @@
+/* tslint:disable:triple-equals */
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FactorsService} from '../../factors.service';
 import {NgForm} from '@angular/forms';
@@ -14,7 +15,7 @@ export class FactorsManagingComponent implements OnInit {
 
   constructor(private factorsService: FactorsService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.factorsService.getAllFactors()
       .subscribe(
         factors => this.allFactors = factors,
@@ -37,12 +38,12 @@ export class FactorsManagingComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.error = null;
     const newFactorName = this.addButtonForm.value.newFactorName;
 
-    let factor: FactorDto = this._allFactors
-      .find(factor => newFactorName.toLowerCase() == factor.name.toLowerCase());
+    const factor: FactorDto = this._allFactors
+      .find(f => newFactorName.toLowerCase() == f.name.toLowerCase());
     if (factor) {
       this.addButtonForm.reset();
       if (factor.status === 'REMOVED') {
@@ -64,12 +65,12 @@ export class FactorsManagingComponent implements OnInit {
       );
   }
 
-  onChangeStatusClick(factorName: string) {
+  onChangeStatusClick(factorName: string): void {
     this.factorsService.changeFactorStatus(factorName)
       .subscribe(
-        resp => {
-          let factorDto = this._allFactors.find(factor => {
-            return factor.name == factorName;
+        () => {
+          const factorDto = this._allFactors.find(factor => {
+            return factor.name === factorName;
           });
           factorDto.status = factorDto.status === 'ACTIVE' ? 'REMOVED' : 'ACTIVE';
         },

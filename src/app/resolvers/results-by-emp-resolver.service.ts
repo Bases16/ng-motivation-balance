@@ -18,7 +18,7 @@ export class ResultsByEmpResolver implements Resolve<ResultModel[]> {
       concatMap(user => {
         return this.resultService.getResultsByEmpId(user.empId);
       }),
-      catchError(err => {
+      catchError(() => {
         return of(undefined);
       })
     );

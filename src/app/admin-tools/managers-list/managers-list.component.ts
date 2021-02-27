@@ -12,10 +12,10 @@ export class ManagersListComponent implements OnInit {
 
   constructor(private employeesService: EmployeesService, private route: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.data
       .subscribe((data: Data) => {
-        this.managers = data['managers'];
+        this.managers = data.managers;
       });
   }
 

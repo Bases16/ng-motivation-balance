@@ -1,3 +1,4 @@
+/* tslint:disable:triple-equals */
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../environments/environment';
@@ -14,8 +15,8 @@ export class EmployeesService {
 
   constructor(private http: HttpClient) {}
 
-  getEmployeeById(id: string) {
-    return this.loadedEmployees.find(val => val.id == id);
+  getEmployeeById(id: string): EmployeeDto {
+    return this.loadedEmployees.find(loadedEmp => loadedEmp.id == id);
   }
 
   getEmployeesByManagerId(managerId: number): Observable<EmployeeDto[]> {
@@ -52,7 +53,7 @@ export class EmployeesService {
     }
     return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/search-employee',
       {
-        params: params
+        params
       })
       .pipe(catchError(UtilService.handleError));
   }
@@ -77,10 +78,10 @@ export class EmployeesService {
       .pipe(catchError(UtilService.handleError));
   }
 
-  private updateLoadedEmpsList(emps: EmployeeDto[]) {
-    for (let emp of emps) {
-      let oldEmp = this.loadedEmployees.find(val => val.id == emp.id);
-      if (oldEmp == undefined) {
+  private updateLoadedEmpsList(emps: EmployeeDto[]): void {
+    for (const emp of emps) {
+      const oldEmp = this.loadedEmployees.find(loadedEmp => loadedEmp.id == emp.id);
+      if (oldEmp === undefined) {
         this.loadedEmployees.push(emp);
       } else {
         this.loadedEmployees[emps.indexOf(oldEmp)] = emp;

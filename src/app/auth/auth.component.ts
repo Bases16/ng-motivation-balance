@@ -16,13 +16,13 @@ export class AuthComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  onSwitchMode() {
+  onSwitchMode(): void {
     this.isLoginMode = !this.isLoginMode;
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     this.error = null;
     if (!form.valid) {
       return;
@@ -33,7 +33,7 @@ export class AuthComponent implements OnInit {
     this.isLoading = true;
     if (this.isLoginMode) {
       this.authService.login(email, password)
-        .subscribe(resData => {
+        .subscribe(() => {
           this.isLoading = false;
           this.isLoginMode = true;
           this.authService.user.pipe(
@@ -53,7 +53,7 @@ export class AuthComponent implements OnInit {
       const firstName = form.value.firstName;
       const lastName = form.value.lastName;
       this.authService.signUp(email, password, firstName, lastName)
-        .subscribe(resData => {
+        .subscribe(() => {
           this.isLoading = false;
           this.router.navigate(['/auth']);
           this.isLoginMode = true;

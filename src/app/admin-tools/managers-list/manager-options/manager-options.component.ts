@@ -16,16 +16,16 @@ export class ManagerOptionsComponent implements OnInit {
               private route: ActivatedRoute, private router: Router) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe(
       (params: Params) => {
-        this.manager = this.employeesService.getEmployeeById(params['id']);
+        this.manager = this.employeesService.getEmployeeById(params.id);
         localStorage.setItem('currentManagerId', this.manager.id);
       }
     );
   }
 
-  onRemove() {
+  onRemove(): void {
     if (confirm('ARE YOU SURE TO REMOVE ' + this.manager.firstName
       + ' ' + this.manager.lastName + ' FROM BASE?')) {
       this.employeesService.removeEmployee(this.manager.id)
@@ -36,7 +36,7 @@ export class ManagerOptionsComponent implements OnInit {
     }
   }
 
-  onChangeRole() {
+  onChangeRole(): void {
     if (confirm('ARE YOU SURE TO MAKE ' + this.manager.firstName
       + ' ' + this.manager.lastName + ' SPECIALIST ? DATA ABOUT SUBORDINATES WILL BE LOST!')) {
       this.employeesService.changeRole(this.manager.id)

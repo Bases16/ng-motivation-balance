@@ -11,7 +11,7 @@ import {HeaderComponent} from './header/header.component';
 import {AdminToolsComponent} from './admin-tools/admin-tools.component';
 import {NewSurveyComponent} from './new-survey/new-survey.component';
 import {ResultDetailComponent} from './results/result-detail/result-detail.component';
-import {EmployeesWithResultsByManager} from './employees-with-results-by-manager/employees-with-results-by-manager.component';
+import {EmployeesWithResultsByManagerComponent} from './employees-with-results-by-manager/employees-with-results-by-manager.component';
 import {AuthPageGuard} from './auth/guards/auth-page.guard';
 import {AccessDeniedComponent} from './shared/access-denied/access-denied.component';
 import {AdminPagesAuthGuard} from './auth/guards/admin-pages-auth.guard';
@@ -81,7 +81,7 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: 'emps-with-res-by-manager/:managerId', component: EmployeesWithResultsByManager,
+    path: 'emps-with-res-by-manager/:managerId', component: EmployeesWithResultsByManagerComponent,
     canActivate: [ManagerAdminPagesAuthGuard],
     resolve: {employees: EmployeesByManagerResolver, results: ResultsByManagerResolver,
               managers: ManagersResolver},
@@ -115,7 +115,7 @@ const appRoutes: Routes = [
     AdminToolsComponent,
     NewSurveyComponent,
     ResultDetailComponent,
-    EmployeesWithResultsByManager,
+    EmployeesWithResultsByManagerComponent,
     AccessDeniedComponent,
     ResultsComponent,
     ResultsStartComponent,

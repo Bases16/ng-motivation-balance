@@ -8,6 +8,6 @@ export class AccessDeniedComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

@@ -5,10 +5,10 @@ import {Component, Input, OnInit} from '@angular/core';
   templateUrl: './error-notification.component.html'
 })
 export class ErrorNotificationComponent implements OnInit {
-  @Input() error: string = 'An unknown error occurred! Please try later.';
+  @Input() error = 'An unknown error occurred! Please try later.';
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

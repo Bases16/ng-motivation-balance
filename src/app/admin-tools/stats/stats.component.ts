@@ -15,7 +15,7 @@ export class StatsComponent implements OnInit {
 
   constructor(private statsService: StatsService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.statsService.getAllRelevEstimPairs()
       .subscribe(
         pairs => {
@@ -26,23 +26,23 @@ export class StatsComponent implements OnInit {
       );
   }
 
-  private calcStat() {
-    for (let pair of this.allRelevPairs) {
-      let factor = this.activeFactors.find(factor => factor.name == pair.factorName);
-      if (factor == undefined) {
-        let newFactor: Factor = {name: pair.factorName, estimationsSize: 1};
+  private calcStat(): void {
+    for (const pair of this.allRelevPairs) {
+      const factor = this.activeFactors.find(f => f.name === pair.factorName);
+      if (factor === undefined) {
+        const newFactor: Factor = {name: pair.factorName, estimationsSize: 1};
         this.activeFactors.push(newFactor);
       } else {
         factor.estimationsSize++;
       }
     }
 
-    for (let factor of this.activeFactors) {
+    for (const factor of this.activeFactors) {
       let likes = 0;
       let dislikes = 0;
       let neutrals = 0;
 
-      for (let pair of this.allRelevPairs) {
+      for (const pair of this.allRelevPairs) {
         if (pair.factorName === factor.name) {
           switch (pair.estimation) {
             case 'LIKE': likes++; break;
@@ -61,8 +61,8 @@ export class StatsComponent implements OnInit {
 
     this.factorStats
       .sort((fs1, fs2) => {
-        if (fs1.factorName < fs2.factorName) return -1;
-        if (fs1.factorName > fs2.factorName) return 1;
+        if (fs1.factorName < fs2.factorName) { return -1; }
+        if (fs1.factorName > fs2.factorName) { return 1; }
       });
   }
 

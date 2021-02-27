@@ -8,7 +8,7 @@ import {EmployeeDto, ResultModel} from '../models-container.model';
   selector: 'app-employee-list',
   templateUrl: './employees-with-results-by-manager.component.html'
 })
-export class EmployeesWithResultsByManager implements OnInit {
+export class EmployeesWithResultsByManagerComponent implements OnInit {
   private _employees: EmployeeDto[];
   results: ResultModel[];
   manager: EmployeeDto;
@@ -17,42 +17,42 @@ export class EmployeesWithResultsByManager implements OnInit {
   constructor(private route: ActivatedRoute, private resultsService: ResultsService,
               private employeesService: EmployeesService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.data
       .subscribe((data: Data) => {
-        if (data['employees'] === undefined) {
+        if (data.employees === undefined) {
           this.resolverFailed = true;
           return;
         }
-        this.employees = data['employees'];
+        this.employees = data.employees;
       });
     this.route.data
       .subscribe((data: Data) => {
-        if (data['results'] === undefined) {
+        if (data.results === undefined) {
           this.resolverFailed = true;
           return;
         }
-        this.results = data['results'];
+        this.results = data.results;
         this.resultsService.userResults = this.results;
       });
     this.route.params.subscribe(
       (params: Params) => {
-        let manager = this.employeesService.getEmployeeById(params['managerId']);
+        const manager = this.employeesService.getEmployeeById(params.managerId);
         this.manager = manager ? manager : {
           id: 'own', managerId: '', firstName: '', lastName: '', empRole: ''
-        }
+        };
       });
   }
 
-  get employees() {
+  get employees(): EmployeeDto[] {
     return this._employees;
   }
 
   set employees(employees: EmployeeDto[]) {
     this._employees = employees.sort((e1, e2) => {
-      if (e1.lastName < e2.lastName) return -1;
-      if (e1.lastName > e2.lastName) return 1;
-      else return 0;
+      if (e1.lastName < e2.lastName) { return -1; }
+      if (e1.lastName > e2.lastName) { return 1; }
+      else { return 0; }
     });
   }
 

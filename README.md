@@ -27,8 +27,3 @@ These estimations have their numeric equivalent: +1, 0 and -1 respectively.
 * PostgreSQL
 * JUnit 4
 * Maven
-
-* JTA (Atomikos)
-* PostgreSQL
-* JUnit 4
-* Maven  

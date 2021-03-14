@@ -1,27 +1,34 @@
-# NgMotivationBalance
+# Motivation Balance
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.7.
+---
 
-## Development server
+A web-application for organizations to collect their employees' attitudes on any factors (as for example playstation, free coffee, scrum etc).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+### Functionality
+There is a **survey** with relevant factors and employees should take this survey to express their attitude on the factors.  
+There are 3 options to choose on each factor: **LIKE, NEUTRAL and DISLIKE.**  
+These estimations have their numeric equivalent: +1, 0 and -1 respectively.  
+**All estimations are summed up and form a total balance**. With that we can see current motivation balance of an employee.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### There are 3 types of users: ADMIN, MANAGER and SPECIALIST.
+- **SPECIALIST** is able to take the survey and see history of own survey results.
+- **MANAGER** as an employee is able to take the survey as well and also see results of employees related to this manager.
+- **ADMIN**  is able to add/remove current factors, turn a specialist into a manager and vice-versa, assign employees to a particular manager, see all results, see overall statistic etc.
+---
 
-## Build
+### Technology stack
+* Spring 5 **([link to a backend repo](https://github.com/Bases16/motivation-balance))**
+* Angular 11
+* Spring-Security
+* JPA (Hibernate)
+* JTA (Atomikos)
+* PostgreSQL
+* JUnit 4
+* Maven
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* JTA (Atomikos)
+* PostgreSQL
+* JUnit 4
+* Maven  

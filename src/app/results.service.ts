@@ -42,7 +42,7 @@ export class ResultsService {
 
   getEmpResultsByManagerId(managerId: number): Observable<ResultModel[]> {
     return this.http.get<ResultDto[]>
-    (environment.serverHost + '/v1/emps/by-manager/' + managerId + 'results/relevant')
+    (environment.serverHost + '/v1/emps/by-manager/' + managerId + '/results/relevant')
       .pipe(
         map(resultsResponse => {
           return resultsResponse.map(resResp => {

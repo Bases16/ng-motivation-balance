@@ -14,7 +14,7 @@ export class StatsService {
 
   getAllRelevEstimPairs(): Observable<EstimationPairDto[]> {
     return this.http
-      .get<EstimationPairDto[]>(environment.serverHost + '/rest/stats/all-relev-pairs')
+      .get<EstimationPairDto[]>(environment.serverHost + '/v1/estim-pairs/relevant')
       .pipe(catchError(UtilService.handleError));
   }
 

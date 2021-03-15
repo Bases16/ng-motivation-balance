@@ -12,22 +12,22 @@ export class FactorsService {
   constructor(private http: HttpClient) {}
 
   getActiveFactorNames(): Observable<string[]> {
-    return this.http.get<string[]>(environment.serverHost + '/rest/factors/active')
+    return this.http.get<string[]>(environment.serverHost + '/v1/factors/active')
       .pipe(catchError(UtilService.handleError));
   }
 
   getAllFactors(): Observable<FactorDto[]> {
-    return this.http.get<FactorDto[]>(environment.serverHost + '/rest/factors/manage/all')
+    return this.http.get<FactorDto[]>(environment.serverHost + '/v1/factors')
       .pipe(catchError(UtilService.handleError));
   }
 
   changeFactorStatus(factorName: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/factors/manage/change-status', factorName)
+    return this.http.put(environment.serverHost + '/v1/factors/change-status', factorName)
       .pipe(catchError(UtilService.handleError));
   }
 
   createNewFactor(factorName: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/factors/manage/create', factorName)
+    return this.http.post(environment.serverHost + '/v1/factors', factorName)
       .pipe(catchError(UtilService.handleError));
   }
 

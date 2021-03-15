@@ -10,7 +10,8 @@ A web-application for organizations to collect their employees' attitudes on any
 There is a **survey** with relevant factors and employees should take this survey to express their attitude on the factors.  
 There are 3 options to choose on each factor: **LIKE, NEUTRAL and DISLIKE.**  
 These estimations have their numeric equivalent: +1, 0 and -1 respectively.  
-**All estimations are summed up and form a total balance**. With that we can see current motivation balance of an employee.
+**All estimations are summed up and form a total balance**.  
+With that we can see current motivation balance of an employee.
 
 #### There are 3 types of users: ADMIN, MANAGER and SPECIALIST.
 - **SPECIALIST** is able to take the survey and see history of own survey results.

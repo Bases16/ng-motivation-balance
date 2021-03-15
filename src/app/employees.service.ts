@@ -21,7 +21,7 @@ export class EmployeesService {
 
   getEmployeesByManagerId(managerId: number): Observable<EmployeeDto[]> {
     return this.http
-      .get<EmployeeDto[]>(environment.serverHost + '/rest/emps/by-manager/' + managerId)
+      .get<EmployeeDto[]>(environment.serverHost + '/v1/emps/by-manager/' + managerId)
       .pipe(
         tap(newEmps => this.updateLoadedEmpsList(newEmps)),
         catchError(UtilService.handleError)
@@ -29,7 +29,7 @@ export class EmployeesService {
   }
 
   getEmployeesWithoutManager(): Observable<EmployeeDto[]> {
-    return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/emps-without-managers/')
+    return this.http.get<EmployeeDto[]>(environment.serverHost + '/v1/emps/without-manager')
       .pipe(
         tap(newEmps => this.updateLoadedEmpsList(newEmps)),
         catchError(UtilService.handleError)
@@ -37,7 +37,7 @@ export class EmployeesService {
   }
 
   getAllManagers(): Observable<EmployeeDto[]> {
-    return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/managers')
+    return this.http.get<EmployeeDto[]>(environment.serverHost + '/v1/emps/managers')
       .pipe(
         tap(newEmps => this.updateLoadedEmpsList(newEmps)),
         catchError(UtilService.handleError)
@@ -51,30 +51,28 @@ export class EmployeesService {
     } else {
       params = new HttpParams().set('first', fir);
     }
-    return this.http.get<EmployeeDto[]>(environment.serverHost + '/rest/emps/search-employee',
-      {
-        params
-      })
-      .pipe(catchError(UtilService.handleError));
+    return this.http.get<EmployeeDto[]>(environment.serverHost + '/v1/emps/search',
+      { params }
+      ).pipe(catchError(UtilService.handleError));
   }
 
   removeEmployee(empId: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/remove', empId)
+    return this.http.delete(environment.serverHost + '/v1/emps/remove/' + empId)
       .pipe(catchError(UtilService.handleError));
   }
 
   changeRole(empId: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/change-role', empId)
+    return this.http.put(environment.serverHost + '/v1/emps/change-role', empId)
       .pipe(catchError(UtilService.handleError));
   }
 
   releaseFromManager(empId: string): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/release-from-manager', empId)
+    return this.http.put(environment.serverHost + '/v1/emps/release-from-manager', empId)
       .pipe(catchError(UtilService.handleError));
   }
 
   saveAssignation(empId, managerId): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/emps/assign-manager/' + managerId, empId)
+    return this.http.put(environment.serverHost + '/v1/emps/assign-manager/' + managerId, empId)
       .pipe(catchError(UtilService.handleError));
   }
 

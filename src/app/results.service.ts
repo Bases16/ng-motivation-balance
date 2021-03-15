@@ -23,12 +23,12 @@ export class ResultsService {
   }
 
   saveResult(resultDto: ResultDto): Observable<any> {
-    return this.http.post(environment.serverHost + '/rest/results/save', resultDto)
+    return this.http.post(environment.serverHost + '/v1/results/', resultDto)
       .pipe(catchError(UtilService.handleError));
   }
 
   getResultsByEmpId(empId: number): Observable<ResultModel[]> {
-    return this.http.get<ResultDto[]>(environment.serverHost + '/rest/results/emp/' + empId)
+    return this.http.get<ResultDto[]>(environment.serverHost + '/v1/emps/' + empId + '/results')
       .pipe(
         map(resultsResponse => {
           return resultsResponse.map(resResp => {
@@ -42,7 +42,7 @@ export class ResultsService {
 
   getEmpResultsByManagerId(managerId: number): Observable<ResultModel[]> {
     return this.http.get<ResultDto[]>
-    (environment.serverHost + '/rest/results/by-manager/' + managerId)
+    (environment.serverHost + '/v1/emps/by-manager/' + managerId + 'results/relevant')
       .pipe(
         map(resultsResponse => {
           return resultsResponse.map(resResp => {

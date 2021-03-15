@@ -19,7 +19,7 @@ export class AuthService {
   signUp(email: string, password: string, firstName: string, lastName: string): Observable<any> {
     return this.http
       .post(
-        environment.serverHost + '/rest/auth/register',
+        environment.serverHost + '/v1/auth/register',
         {
           email,
           password,
@@ -33,7 +33,7 @@ export class AuthService {
   login(email: string, password: string): Observable<AuthResponseDto> {
     return this.http
       .post<AuthResponseDto>(
-        environment.serverHost + '/rest/auth/login',
+        environment.serverHost + '/v1/auth/login',
         {
           email,
           password
